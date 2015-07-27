@@ -1,56 +1,52 @@
 <?php
-
 define("DB_HOST", 'localhost');
 define("DB_NAME", 'wangdk');
 define("DB_USER", 'root');
 define("DB_PASS", '123456');
-define("DB_DIRVER", 'mysql');
+define("DB_DIRVER", 'PDO');
+define("DB_PORT", '3306');
 
-require 'framework/model.php';
+require ROOT_PATH.'/framework/model.php';
 $db = new model('user');
+echo '<pre>';
 
 var_dump($db);
-$table = 'user';
-$select = '*';
-$where  = 'where 1=1';
-$sort = ' order by id desc';
-$limit = '';
 
-//$data = $db->getAll($table, $select, $where, $sort, $limit);
-//print_r($data);
+// 新增
+// $data['user_name'] = 'wangdk';
+// $data['avatar']    = '王德康';
+// $id = $db->create($data);
+// print_r($id);
 
-//$num = $db->getTotal($table, $select, $where);
-// var_dump($num);
+// 单条查询
+// $sql = 'where  id = ?';
+// $params = array(13);
 
-echo '<pre>';
-// $info = $db->getOne($table, $where, $select, $sort);
-// print_r($info);
+// $data = $db->read($sql, $params);
+// print_r($data);
 
 
-// $table = 'user';
-// $set = "last_time = '2012-12-12 00:00:00'";
-// $where  = '';
+// 多条查询
+// $sql = 'where 1 = ? order by id DESC';
+// $params = array(1);
+// $data = $db->getList($sql, $params);
+// print_r($data);
 
-// $nums = $db->update($table, $set, $where);
-// echo $nums;
-// echo '<br>';
-//
+// 更新
+// $set = 'set user_name = ?';
+// $where = ' where id = ?';
+// $params = array('wangdekanghah2342343a',85);
+// $data = $db->update($set,$where, $params);
+// print_r($data);
 
-
-// $table = 'user';
-// $where  = ' where id = 233333 or id = 2334333';
-
-// $nums = $db->delete($table, $where);
-// echo $nums;
-// echo '<br>';
-//
-
-// $table = 'user';
-// $where  = ' where id = 2333334343xxx3 or id = 2334333';
-
-// $nums = $db->delete($table, $where);
-//echo $nums;
-echo '<br>';
+// 删除
+// $sql = 'where id = ?';
+// $params = array(85);
+// $data = $db->delete($sql, $params);
+// print_r($data);
 
 
-
+$sql = 'where 1= ?';
+$params = array(1);
+$data = $db->getTotal($sql, $params);
+print_r($data);

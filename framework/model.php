@@ -5,8 +5,8 @@
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-7-21 上午11:02:51 $
- * $Id$
- * model 主要用能是分离让传入数据库参数更简化
+ * $Id: model.php 381 2015-07-24 07:39:35Z wangdk $
+ *
  */
 class model
 {
@@ -18,62 +18,91 @@ class model
         $this->table = $table;
 
         if (!self::$db) {
-            require ROOT_PATH.'/framework/drives/'.DB_DRIVE.'.php';
-            $class_name = DB_DRIVE.'Drive';
-            self::$db = new $class_name(DB_HOST, DB_NAME,DB_USER, DB_PASS);
+            require ROOT_PATH.'/framework/drives/'.DB_DIRVER.'.php';
+            $class_name = DB_DIRVER.'Drive';
+            self::$db = new $class_name(DB_HOST, DB_NAME,DB_USER, DB_PASS, DB_PORT);
         }
     }
 
-    /**
-    * where 条件数组转为 where 语句
-    * @param unknown_type $where
-    * 支持形式：
-    *     array('id'=>array(1,2,3,4,5))   => where id IN (1,2,3,4,5)
-    *     array('id'=>array(1,2,3,4,5), 'id2' => array(1,23,4,56))  => where `id` IN (1,2,3,4,5) AND `id2` IN(1,23,4,56)
-    *     array('id'=>1, 'name'='wangdk') => where `id` = 1 AND `name` = 'wangdk'
-    *     array('id'=>1, 'OR name'='wangdk') => where `id` = 1 OR `name` = 'wangdk'
-    *     array('id'=>1, 'name !='='wangdk') => where `id` = 1 and `name` != 'wangdk'
-    *     array('id'=>1, 'OR name !='='wangdk') => where `id` = 1 OR `name` != 'wangdk'
-    */
-    private function arrayToWhere($where)
-    {
-            $sql = '';
-
-            if (!$where) {
-                throw new Exception('arrayToWhere args is not empty!');
-            }
-
-            if (!is_array($where)) {
-               throw new Exception('arrayToWhere args is not array');
-            }
-
-             foreach ($where as $key => $value) {
-                if ($sql) $sql.= ' AND ';
-                if (is_array($value)) {
-                    $sql .= '`'.$key.'` IN('.join(',', array_fill(0, count($value), '?')).') ';
-                }
-            }
-            echo $sql;
-      }
 
     /**
-     * fields 数组转换为字段
-     * @param unknown_type $fields
+     * 新增一条记录
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
+     * $data['user_name'] = "aa";
+     * $data['avatar']    = 'haa';
      */
-    public function arrayToFields($fields)
+    public function create($data)
     {
+        if (!$data) return false;
 
+        $key_list   = array_keys($data);
+        $value_list = array_values($data);
+
+        $sql = 'insert into '.$this->table.'('.join(',', $key_list).') values('.join(',', array_fill(0, count($value_list), '?')).')';
+        return self::$db->create($sql, $value_list);
+    }
+
+    /**
+     * 获取一条记录集
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
+     *
+     * @example
+     * $where = 'id = ?'
+     * $params = array(1);
+     *
+     */
+    public function read($where, $params, $fields = '*')
+    {
+        $sql = 'select '.$fields.' from '.$this->table.' '.$where.' limit 1';
+        return self::$db->getOne($sql, $params);
+    }
+
+    /**
+     * 获取多条记录集
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
+     */
+    public function getList($where, $params, $fields = '*')
+    {
+        $sql = 'select '.$fields.' from '.$this->table.' '.$where;
+        return self::$db->getAll($sql, $params);
+    }
+
+    /**
+     * 获取记录数
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
+     */
+    public function getTotal($where, $params, $fields = '*')
+    {
+        $sql = 'select count('.$fields.') from '.$this->table.' '.$where;
+        return self::$db->getTotal($sql, $params);
     }
 
 
     /**
-     * 获取一条数据记录集
-     * @param unknown_type $where
-     * @param unknown_type $sql
-     * @param unknown_type $fields
+     * 更新记录集
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
      */
-    public function read($where, $sql, $fields)
+    public function update($set, $where, $params = array())
     {
-        return self::$db->getOne($this->table, $this->arrayToWhere($where), $this->arrayToFields($fields), $sql);
+        if (!$where) return false;
+        $sql = 'update '.$this->table.' '.$set.' '.$where;
+        return self::$db->update($sql, $params);
+    }
+
+    /**
+     * 删除记录集
+     * @param unknown_type $sql 绑定参数
+     * @param unknown_type $params $params 绑定参数的值
+     */
+    public function delete($where, $params = array())
+    {
+        if (!$where) return false;
+        $sql = 'delete from '.$this->table.' '.$where;
+        return self::$db->delete($sql, $params);
     }
 }

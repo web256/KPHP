@@ -1,7 +1,7 @@
 <?php
-require ROOT_PATH."/framework/interface.php";
+require ROOT_PATH."/framework/DB.php";
 
-class mysqlDrive implements IDb
+class mysqlDrive extends DBAbstract implements IDb
 {
     private static $link;
 
@@ -11,17 +11,21 @@ class mysqlDrive implements IDb
      * @param [type] $mysql_user     [description]
      * @param [type] $mysql_password [description]
      */
-    public function __construct($host, $db_name, $db_user, $db_password)
+    public function __construct($host, $db_name, $db_user, $db_password, $prot)
     {
         if (!self::$link) {
 
+            $host = empty($prot) ? $host : $host .':'.$prot;
+
             self::$link = mysql_connect($host, $db_user, $db_password);
             if (!self::$link) {
-                 $this->error_log(' Could not connect mysql');
+
+                 $this->error_log('mysql_connect:Could not connect mysql');
             }
 
+            $this->setCharset('utf8');
+
             $this->selectDb($db_name);
-            $this->setCharset();
         }
         return self::$link;
     }
@@ -29,9 +33,9 @@ class mysqlDrive implements IDb
     /**
      * 设置数据连接编码
      */
-    private function setCharset()
+    public function setCharset($charset)
     {
-        mysql_query("set names 'utf8'", self::$link);
+        mysql_query("setCharset:set names '".$charset."'", self::$link);
     }
 
     /**
@@ -41,16 +45,67 @@ class mysqlDrive implements IDb
     private function selectDb($db_name)
     {
         if (!mysql_select_db($db_name)) {
-            $this->error_log(' mysql_select_db  db  fail !');
+            $this->errorLog('selectDb:mysql_select_db  db  fail !');
         }
     }
+
+
+    /**
+     * 绑定SQL参数
+     * 主要作用:mysqli:parse方式防止注入
+     * @param unknown_type $sql 必传参数
+     * @param unknown_type $params  必川参数
+     * @example
+     *     select * from user where id = ?   array(1)
+     *     select * from user where 1  = ?   array(1)
+     */
+    private function buildParams($sql, $params) {
+
+        if (!strpos($sql, '?')) {
+            throw new Exception('buildParams:not find ? in sql ! '.$sql);
+        }
+
+        if (!$params ) {
+            throw new Exception('buildParams:params not empty!');
+        }
+
+        if (!is_array($params)) {
+            throw new Exception('buildParams:params must array!');
+        }
+
+        $index = 0;
+        $pos = stripos($sql, '?');
+
+        while( $pos!== false) {
+
+            // 参数必须存在 // empty($params[$index]) 要允许0的存在
+            if (!isset($params[$index])) {
+                throw new Exception('buildParams:params[$index] not empty!');
+            }
+
+            if (is_string($params[$index])) {
+                // 过滤SQL非法字符，基础防注入
+                $params[$index] = "'".mysql_real_escape_string($params[$index])."'";
+            }
+
+            // 替换?为参数
+            $sql = substr_replace($sql, $params[$index], $pos, 1);
+
+            // 查找下一个
+            $pos = stripos($sql, '?');
+            $index++;
+        }
+
+        return $sql;
+    }
+
 
     /**
      * mysql 错误打印
      * @param  [type] $log [description]
      * @return [type]      [description]
      */
-    private function error_log($log)
+    private function errorLog($log)
     {
         throw new Exception($log, mysql_error());
     }
@@ -62,7 +117,12 @@ class mysqlDrive implements IDb
      */
     private function query($sql)
     {
-        return mysql_query($sql, self::$link);
+        $res = mysql_query($sql, self::$link);
+        if (!$res && mysql_errno(self::$link)) {
+            throw new  Exception('Query:invalid query: ' . mysql_error().' '. $sql);
+        }
+
+        return $res;
     }
 
     /**
@@ -70,11 +130,23 @@ class mysqlDrive implements IDb
      * (non-PHPdoc)
      * @see IDb::getAll()
      */
-    public function getAll($table, $select, $where, $sort, $limit)
+    public function create($sql, $params)
+    {
+        $sql = $this->buildParams($sql, $params);
+        $this->query($sql);
+        return mysql_insert_id(self::$link);
+    }
+
+    /**
+     * 查询记录多条
+     * (non-PHPdoc)
+     * @see IDb::getAll()
+     */
+    public function getAll($sql, $params)
     {
         $data = array();
 
-        $sql = " select {$select} from {$table} {$where} {$sort} {$limit}";
+        $sql = $this->buildParams($sql, $params);
 
         // 组合数据
         $result = $this->query($sql);
@@ -95,20 +167,19 @@ class mysqlDrive implements IDb
      * @param string $select
      * @param string $where
     */
-    public function getTotal($table, $select, $where)
+    public function getTotal($sql, $params)
     {
-        $row_num = 0;
-
-        $sql =  " select {$select} from {$table} {$where}";
+        $row_num[0] = 0;
+        $sql = $this->buildParams($sql, $params);
 
         $result = $this->query($sql);
         if ($result) {
 
-            $row_num =  mysql_num_rows($result);
+            $row_num =  mysql_fetch_array($result, MYSQL_NUM);
             mysql_free_result($result);
         }
 
-        return $row_num;
+        return $row_num[0];
     }
 
     /**
@@ -118,14 +189,15 @@ class mysqlDrive implements IDb
      * @param string $where
      * @param array
     */
-    public function getOne($table, $where, $select, $sort)
+    public function getOne($sql, $params)
     {
         $info = array();
 
-        $sql = " select {$select} from {$table} {$where} {$sort} limit 1";
-        $result = $this->query($sql);
+        $sql = $this->buildParams($sql, $params);
 
+        $result = $this->query($sql);
         if ($result) {
+
             $info = mysql_fetch_array($result, MYSQL_ASSOC);
             mysql_free_result($result);
         }
@@ -135,16 +207,14 @@ class mysqlDrive implements IDb
 
     /**
      * 更新记录
-     * @param string $table
-     * @param string $select
-     * @param string $where
+     * @param string $sql
     */
-    public function update($table, $set, $where)
+    public function update($sql, $params)
     {
 
         $rows = 0;
-        $sql = "update {$table} set {$set} {$where}";
 
+        $sql = $this->buildParams($sql, $params);
         $result = $this->query($sql);
         if ($result) {
             $rows = mysql_affected_rows(self::$link);
@@ -155,14 +225,13 @@ class mysqlDrive implements IDb
 
     /**
      * 删除记录
-     * @param string $table
-     * @param string $where
+     * @param string $sql
     */
-    public function delete($table, $where)
+    public function delete($sql, $params)
     {
         $rows = 0;
 
-        $sql = "delete from {$table} {$where} ";
+        $sql = $this->buildParams($sql, $params);
         $result = $this->query($sql);
 
         if($result) {
