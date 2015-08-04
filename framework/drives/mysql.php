@@ -19,8 +19,7 @@ class mysqlDrive extends DBAbstract implements IDb
 
             self::$link = mysql_connect($host, $db_user, $db_password);
             if (!self::$link) {
-
-                 $this->error_log('mysql_connect:Could not connect mysql');
+                $this->errorLog('mysql_connect:connect not mysql');
             }
 
             $this->setCharset('utf8');
@@ -35,7 +34,7 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     public function setCharset($charset)
     {
-        mysql_query("setCharset:set names '".$charset."'", self::$link);
+        mysql_query("set names '".$charset."'", self::$link);
     }
 
     /**
@@ -62,15 +61,15 @@ class mysqlDrive extends DBAbstract implements IDb
     private function buildParams($sql, $params) {
 
         if (!strpos($sql, '?')) {
-            throw new Exception('buildParams:not find ? in sql ! '.$sql);
+            throw new KException('buildParams:not find ? in sql ! '.$sql);
         }
 
         if (!$params ) {
-            throw new Exception('buildParams:params not empty!');
+            throw new KException('buildParams:params not empty!');
         }
 
         if (!is_array($params)) {
-            throw new Exception('buildParams:params must array!');
+            throw new KException('buildParams:params must array!');
         }
 
         $index = 0;
@@ -80,7 +79,7 @@ class mysqlDrive extends DBAbstract implements IDb
 
             // 参数必须存在 // empty($params[$index]) 要允许0的存在
             if (!isset($params[$index])) {
-                throw new Exception('buildParams:params[$index] not empty!');
+                throw new KException('buildParams:params[$index] not empty!');
             }
 
             if (is_string($params[$index])) {
@@ -107,7 +106,7 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     private function errorLog($log)
     {
-        throw new Exception($log, mysql_error());
+        throw new KException($log.' '.mysql_error());
     }
 
     /**
@@ -119,7 +118,7 @@ class mysqlDrive extends DBAbstract implements IDb
     {
         $res = mysql_query($sql, self::$link);
         if (!$res && mysql_errno(self::$link)) {
-            throw new  Exception('Query:invalid query: ' . mysql_error().' '. $sql);
+            throw new  KException('Query:invalid query: ' . mysql_error(self::$link).' '. $sql);
         }
 
         return $res;
@@ -194,7 +193,6 @@ class mysqlDrive extends DBAbstract implements IDb
         $info = array();
 
         $sql = $this->buildParams($sql, $params);
-
         $result = $this->query($sql);
         if ($result) {
 

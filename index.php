@@ -18,7 +18,8 @@ define('POWERBY', (isset($_GET['powerby']) && $_GET['powerby'] == 'alltosun'));
 /**
  * 定义线上调试模式
  */
-define('DEBUG', (isset($_GET['powerby']) && $_GET['debug'] == 1));
+define('DEBUG', (isset($_GET['debug']) && $_GET['debug'] == 1));
+
 
 /**
  * 网站根目录
@@ -52,5 +53,10 @@ if (!ONDEV) error_reporting(0);
  */
 if (DEBUG && POWERBY) error_reporting(E_ALL);
 
+define('FRAMEWORK_PATH', ROOT_PATH.'/framework');
+
+require FRAMEWORK_PATH.'/Init.php';
+require ROOT_PATH.'/helper/setup.php';
 require 'test.php';
+
 ?>

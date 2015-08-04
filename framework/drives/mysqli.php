@@ -5,7 +5,7 @@
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-7-23 上午9:47:06 $
- * $Id: mysqli.php 513 2015-07-27 13:34:55Z wangdk $
+ * $Id: mysqli.php 670 2015-08-03 06:35:24Z wangdk $
  */
 require ROOT_PATH."/framework/DB.php";
 class mysqliDrive extends DBAbstract implements IDB
@@ -68,7 +68,7 @@ class mysqliDrive extends DBAbstract implements IDB
      */
     private function errorLog($log)
     {
-        throw new Exception($log, mysql_error());
+        throw new KException($log, mysql_error());
     }
 
     /**

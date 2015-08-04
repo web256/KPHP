@@ -1,15 +1,7 @@
 <?php
-define("DB_HOST", 'localhost');
-define("DB_NAME", 'wangdk');
-define("DB_USER", 'root');
-define("DB_PASS", '123456');
-define("DB_DIRVER", 'PDO');
-define("DB_PORT", '3306');
 
-require ROOT_PATH.'/framework/model.php';
-$db = new model('user');
 echo '<pre>';
-
+$db = new ModelRes('user');
 var_dump($db);
 
 // 新增
@@ -35,18 +27,17 @@ var_dump($db);
 // 更新
 // $set = 'set user_name = ?';
 // $where = ' where id = ?';
-// $params = array('wangdekanghah2342343a',85);
+// $params = array('wangdekanghah2342343a3433324',9);
 // $data = $db->update($set,$where, $params);
 // print_r($data);
 
 // 删除
 // $sql = 'where id = ?';
-// $params = array(85);
+// $params = array(3);
 // $data = $db->delete($sql, $params);
 // print_r($data);
 
-
-$sql = 'where 1= ?';
-$params = array(1);
-$data = $db->getTotal($sql, $params);
-print_r($data);
+// $sql = 'where 1= ?';
+// $params = array(1);
+// $data = $db->getTotal($sql, $params);
+// print_r($data);

@@ -1,26 +1,178 @@
 <?php
 /**
- *  model.php
+ *  支持主从数据库 封装了CURD 方法 model.php
  * 许可声明：这是一个开源程序，未经许可不得将本软件的整体或任何部分用于商业用途及再发布。
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-7-21 上午11:02:51 $
- * $Id: model.php 381 2015-07-24 07:39:35Z wangdk $
+ * $Id: Model.php 732 2015-08-03 11:58:03Z wangdk $
  *
  */
-class model
+class Model
 {
+    /**
+     * 当前使用的数据库实例，可能是主库，也可能是从库
+     * @var unknown_type
+     */
     private static $db;
+
+    /**
+     * 主库实例
+     * @var unknown_type
+     */
+    private static $masterDb = null;
+    /**
+     * 从库实例
+     * @var unknown_type
+     */
+    private static $slaveDb = null;
+
+    /**
+     * 当前操作的表名
+     * @var unknown_type
+     */
     private $table;
 
-    public function __construct($table)
+    /**
+     * 初始化Model类
+     * @param unknown_type $table  要操作的表名
+     * @param unknown_type $connect_type  连接主库，还是从库，默认主库 1=主库，2=从库
+     */
+    public function __construct($table, $connect_type = 1)
     {
         $this->table = $table;
 
-        if (!self::$db) {
-            require ROOT_PATH.'/framework/drives/'.DB_DIRVER.'.php';
-            $class_name = DB_DIRVER.'Drive';
-            self::$db = new $class_name(DB_HOST, DB_NAME,DB_USER, DB_PASS, DB_PORT);
+        $db_dirver = KConfig::get('db_dirver');
+        if (!$db_dirver) throw  new KException('Model->__construct config db_dirver not empty!');
+
+        $class_name = $db_dirver.'Drive';
+        require FRAMEWORK_PATH.'/drives/'.$db_dirver.'.php';
+
+        if ($connect_type  == 1) {
+            // 主库
+            self::$db = $this->masterDbConnect($class_name);
+        } else if ($connect_type == 2) {
+            // 从库
+            self::$db = $this->slaveDbConnect($class_name);
+        }
+    }
+
+
+    /**
+     *  主库连接
+     * @param unknown_type $class_name
+     * @return unknown_type
+     */
+    private function masterDbConnect($class_name)
+    {
+        $config_info = array();
+
+        if (!self::$masterDb) {
+
+            // 主库
+            $config_info = $this->getMasterConfig();
+
+            // 检查数据完整性
+            $this->checkConfigInfo($config_info);
+
+            self::$masterDb = new $class_name($config_info['db_host'], $config_info['db_name'],$config_info['db_user'], $config_info['db_password'], $config_info['db_port']);
+        }
+
+        return self::$masterDb;
+    }
+
+
+    /**
+     * 从库连接
+     * @param unknown_type $class_name
+     * @return unknown_type
+     */
+    private function slaveDbConnect($class_name)
+    {
+        $config_info = array();
+
+        if (!self::$slaveDb) {
+
+            // 主库
+            $config_info = $this->getSlaveConfig();
+
+            // 检查数据完整性
+            $this->checkConfigInfo($config_info);
+
+            self::$slaveDb = new $class_name($config_info['db_host'], $config_info['db_name'],$config_info['db_user'], $config_info['db_password'], $config_info['db_port']);
+        }
+
+        return self::$slaveDb;
+    }
+
+    /**
+     * 获取主库的配置项目
+     * @throws KException
+     * @return Ambigous <string, multitype:>
+     */
+    private function getMasterConfig()
+    {
+        $db_config = KConfig::get('db');
+        if (!isset($db_config[0])) {
+            throw  new KException('Model->getMasterConfig not empty!');
+        }
+
+        return $db_config[0];
+    }
+
+    /**
+     * 获取从库的配置项目
+     * @throws KException
+     * @return Ambigous <string, multitype:>
+     */
+    private function getSlaveConfig()
+    {
+        $slave_config_info = array();
+        $db_config = KConfig::get('db');
+
+        if (!isset($db_config[0])) {
+            throw  new KException('Model->getSlaveConfig not empty!');
+        }
+
+        $count = count($db_config);
+        if ($count > 1) {
+
+           // 随机主库
+           $index = mt_rand(1, $count - 1);
+           $slave_config_info = $db_config[$index];
+
+           return $slave_config_info;
+        }
+
+        // 只写了从库
+        $slave_config_info = $db_config[0];
+        return $slave_config_info;
+    }
+
+    /**
+     * 检查数据库配置信息的完整性
+     * @param unknown_type $config_info
+     */
+    private function checkConfigInfo($config_info)
+    {
+
+        if (!isset($config_info['db_host'])) {
+            throw new KException('Model->checkConfigInfo not find db_host');
+        }
+
+        if (!isset($config_info['db_user'])) {
+            throw new KException('Model->checkConfigInfo not find db_user');
+
+        }
+
+        if (!isset($config_info['db_password'])) {
+            throw new KException('Model->checkConfigInfo not find db_password');
+
+        }
+
+        if (!isset($config_info['db_port'])) {
+            throw new KException('Model->checkConfigInfo not find db_port');
+
         }
     }
 
@@ -44,6 +196,25 @@ class model
     }
 
     /**
+     * 组合where条件
+     * @param unknown_type $fields 要获取的字段
+     * @param unknown_type $where  where 条件
+     * @param unknown_type $table  表名
+     * @param unknown_type $is_limit 是否要增加limit
+     * @return string
+     */
+    public static function getWhereToSql($fields, $where, $table, $is_limit = 0)
+    {
+        if ($is_limit) {
+            $sql = 'select '.$fields.' from '.$table.' '.$where.' limit 1';
+        } else {
+            $sql = 'select '.$fields.' from '.$table.' '.$where;
+        }
+
+        return $sql;
+    }
+
+    /**
      * 获取一条记录集
      * @param unknown_type $sql 绑定参数
      * @param unknown_type $params $params 绑定参数的值
@@ -55,7 +226,7 @@ class model
      */
     public function read($where, $params, $fields = '*')
     {
-        $sql = 'select '.$fields.' from '.$this->table.' '.$where.' limit 1';
+        $sql = self::getWhereToSql($fields, $where, $this->table, 1);
         return self::$db->getOne($sql, $params);
     }
 
@@ -66,9 +237,22 @@ class model
      */
     public function getList($where, $params, $fields = '*')
     {
-        $sql = 'select '.$fields.' from '.$this->table.' '.$where;
+        $sql = self::getWhereToSql($fields, $where, $this->table);
         return self::$db->getAll($sql, $params);
     }
+
+    /**
+     * 获取记录数，组合total where条件
+     * @param unknown_type $fields 要获取的字段
+     * @param unknown_type $where  where 条件
+     * @return string
+     */
+    public static function getWhereToTotalSql($fields, $where, $table)
+    {
+        $sql = 'select count('.$fields.') from '.$table.' '.$where;
+        return $sql;
+    }
+
 
     /**
      * 获取记录数
@@ -77,10 +261,9 @@ class model
      */
     public function getTotal($where, $params, $fields = '*')
     {
-        $sql = 'select count('.$fields.') from '.$this->table.' '.$where;
+        $sql = self::getWhereToTotalSql($fields, $where, $this->table);
         return self::$db->getTotal($sql, $params);
     }
-
 
     /**
      * 更新记录集

@@ -13,7 +13,7 @@ class PDODrive extends DBAbstract implements IDB
     private static $link;
     private $PDOStatement = null;
 
-    public function __construct($host, $db_name, $db_user, $db_password, $port = 3306)
+    public function __construct($host, $db_name, $db_user, $db_password, $port = 3306, $unix_socket = '/tmp/mysql.sock')
     {
         if (!self::$link) {
 
@@ -25,7 +25,7 @@ class PDODrive extends DBAbstract implements IDB
                  // 创建 PDO 实例
                  self::$link = new PDO($dns, $db_user, $db_password, $options);
              } catch(PDOException $e) {
-                 $this->errorLog('PDO->__construct connect failed: ' . $e->getMessage());
+                 throw new  KException('PDO->__construct connect failed: ' . $e->getMessage());
              }
 
              // 设置连接编码
@@ -86,16 +86,16 @@ class PDODrive extends DBAbstract implements IDB
     {
         // 预编译的SQL，必须存在?
         if (!strpos($sql, '?')) {
-            throw new Exception('PDO->buildParams:not find ? in sql ! '.$sql);
+            throw new KException('PDO->buildParams:not find ? in sql ! '.$sql);
         }
 
         // 预编译的参数必须是数组
         if (!$params ) {
-            throw new Exception('PDO->buildParams:params not empty!');
+            throw new KException('PDO->buildParams:params not empty!');
         }
 
         if (!is_array($params)) {
-            throw new Exception('PDO->buildParams:params must array!');
+            throw new KException('PDO->buildParams:params must array!');
         }
 
         $this->PDOStatement = self::$link->prepare($sql);
@@ -127,12 +127,10 @@ class PDODrive extends DBAbstract implements IDB
     public function create($sql, $params)
     {
         $this->PDOStatement = self::$link->prepare($sql);
-
         $result = $this->PDOStatement->execute($params);
         if (!$result) {
             $this->errorLog('PDO->create: insert data fail '.$sql);
         }
-
         return self::$link->lastInsertId();
     }
 
