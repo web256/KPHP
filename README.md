@@ -12,3 +12,7 @@
 # 1、DB层 Model 类增加读写分离
 # 2、增加 KConfig 配置类
 # 3、增加异常类 KException 统一异常处理
+
+# 2015-08-15 更新
+# 1、增加 Memcache 和 Memcached 扩展
+# 2、增加 Cache层，支持项目，表命名空间
