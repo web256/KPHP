@@ -1,43 +1,26 @@
 <?php
-
 echo '<pre>';
-$db = new ModelRes('user');
-var_dump($db);
+global $mc;
 
-// 新增
-// $data['user_name'] = 'wangdk';
-// $data['avatar']    = '王德康';
-// $id = $db->create($data);
-// print_r($id);
+$mc->flushAll();
 
-// 单条查询
-// $sql = 'where  id = ?';
-// $params = array(13);
+// 设置haha为项目空间，user表下的空间，wangdk key
+var_dump($mc->setPS('haha')->setNs('user')->setCache('wangdk', "wangdekang88888111", 180));
+var_dump($mc->setPS('haha')->setNS('user')->setCache('wangdk1', "wangdekang88888111", 180));
+var_dump($mc->setPS('haha')->setNS('goods')->setCache('wangdk', "wangdekang88888", 180));
 
-// $data = $db->read($sql, $params);
-// print_r($data);
+$mc->setPS('haha')->delNS('user');
+$mc->setPS('haha')->setNs('goods')->deleteCache('wangdk');
 
 
-// 多条查询
-// $sql = 'where 1 = ? order by id DESC';
-// $params = array(1);
-// $data = $db->getList($sql, $params);
-// print_r($data);
 
-// 更新
-// $set = 'set user_name = ?';
-// $where = ' where id = ?';
-// $params = array('wangdekanghah2342343a3433324',9);
-// $data = $db->update($set,$where, $params);
-// print_r($data);
+var_dump($mc->setPS('haha')->setNS('goods')->getCache('wangdk'));
+var_dump($mc->setPS('haha')->setNS('user')->getCache('wangdk1'));
+var_dump($mc->setPS('haha')->setNS('user')->getCache('wangdk'));
 
-// 删除
-// $sql = 'where id = ?';
-// $params = array(3);
-// $data = $db->delete($sql, $params);
-// print_r($data);
 
-// $sql = 'where 1= ?';
-// $params = array(1);
-// $data = $db->getTotal($sql, $params);
-// print_r($data);
+print_r(CacheWrapper::$debug);
+
+
+
+

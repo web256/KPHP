@@ -63,6 +63,9 @@
     cat live189.alltosun.net_access.log | awk  '{print $7}' | grep -v 'images\|js\|upload\|/$\|css' | sort -nr | uniq -c | sort -nr |  more
 
 
+7、在 Linux 上可用以下语句看了一下服务器的TCP状态(连接状态数量统计)：
+    netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
 
  */
 ?>

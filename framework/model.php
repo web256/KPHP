@@ -40,7 +40,8 @@ class Model
      */
     public function __construct($table, $connect_type = 1)
     {
-        $this->table = $table;
+        $prefix      = KConfig::get('db_table_prefix');
+        $this->table = $prefix.$table;
 
         $db_dirver = KConfig::get('db_dirver');
         if (!$db_dirver) throw  new KException('Model->__construct config db_dirver not empty!');

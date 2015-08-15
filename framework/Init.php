@@ -7,8 +7,14 @@
  * $Date: 2015-8-4 下午5:15:38 $
  * $Id$
  */
+
+date_default_timezone_set("PRC");
+
 require FRAMEWORK_PATH.'/KConfig.php';
+require FRAMEWORK_PATH.'/CacheWrapper.php';
+
 require FRAMEWORK_PATH.'/Model.php';
 require FRAMEWORK_PATH.'/ModelRes.php';
+
 
 ?>

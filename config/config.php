@@ -24,4 +24,19 @@ KConfig::set('db', array(
 ));
 
 
+
+// 项目命名空间
+KConfig::set('project_name', 'dev_test1');
+
+// cache 驱动，支持 memcache, memcached
+KConfig::set('mc_dirver', 'memcached');
+
+// memcache缓存
+KConfig::set('mc', array(
+    array('mc_host' => '127.0.0.1', 'mc_port' => 11211),
+    array('mc_host' => '127.0.0.1', 'mc_port' => 11212)
+));
+
+
+
 ?>
