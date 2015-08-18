@@ -101,7 +101,7 @@ class MemcachedCache extends AbstractCache implements ICache
     */
     public function get($key)
     {
-        $key = md5($key);
+        $key   = md5($key);
         $value = self::$mcd->get($key);
 
         if (self::$mcd->getResultCode() == Memcached::RES_NOTFOUND ) {

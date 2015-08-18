@@ -12,7 +12,7 @@
 KConfig::set('db_charset', 'utf8');
 
 // 数据库驱动,支持 mysql,mysqli,PDO
-KConfig::set('db_dirver', 'mysql');
+KConfig::set('db_dirver', 'PDO');
 
 // 数据库表前缀
 KConfig::set('db_table_prefix', 'app_');

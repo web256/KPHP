@@ -5,31 +5,29 @@
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-7-23 上午9:47:06 $
- * $Id: mysqli.php 670 2015-08-03 06:35:24Z wangdk $
+ * $Id: mysqli.php 1392 2015-08-17 11:06:31Z wangdk $
  */
-require ROOT_PATH."/framework/DB.php";
+require_once ROOT_PATH."/framework/DB.php";
 class mysqliDrive extends DBAbstract implements IDB
 {
-    private static $link;
+    private $link;
     private $stmt = null;
 
     public function __construct($host, $db_name, $db_user, $db_password, $port)
     {
-        if (!self::$link) {
 
-             // 创建 mysqli实例
-             self::$link = new mysqli($host, $db_user, $db_password, $db_name, $port);
+         // 创建 mysqli实例
+         $this->link = new mysqli($host, $db_user, $db_password, $db_name, $port);
 
-             if (self::$link->connect_errno) {
-                 $this->errorLog('MySqli->__construct new mysqli Fail');
-             }
+         if ($this->link->connect_errno) {
+             $this->errorLog('MySqli->__construct new mysqli Fail');
+         }
 
-             // 设置连接编码
-             $this->setCharSet('utf8');
+         // 设置连接编码
+         $this->setCharSet('utf8');
 
-             // 选择数据库
-             $this->selectDB($db_name);
-        }
+         // 选择数据库
+         $this->selectDB($db_name);
     }
 
     /**
@@ -38,7 +36,7 @@ class mysqliDrive extends DBAbstract implements IDB
     public  function __destruct()
     {
         // 关闭数据库对象
-        if (self::$link) self::$link->close();
+        if ($this->link)  $this->link->close();
     }
 
     /**
@@ -47,7 +45,7 @@ class mysqliDrive extends DBAbstract implements IDB
      */
     public function setCharSet($charset)
     {
-        self::$link->set_charset($charset);
+         $this->link->set_charset($charset);
     }
 
     /**
@@ -56,7 +54,7 @@ class mysqliDrive extends DBAbstract implements IDB
      */
     private function selectDB($db_name)
     {
-        if (!self::$link->select_db($db_name)) {
+        if (!$this->link->select_db($db_name)) {
             $this->errorLog('MySqli->selectDB:selected db fail!');
         }
     }
@@ -78,7 +76,7 @@ class mysqliDrive extends DBAbstract implements IDB
      */
     private function query($sql)
     {
-        $result = self::$link->query($sql);
+        $result = $this->link->query($sql);
         if (self::$link->errno) {
             $this->errorLog('MySqli->query: query exec Fail');
         }
@@ -134,7 +132,7 @@ class mysqliDrive extends DBAbstract implements IDB
         if ($array) {
             // mysql_real_escape_string
             foreach ($array as $k => $v) {
-                if (is_string($v)) $array[$k] = self::$link->real_escape_string($v);
+                if (is_string($v)) $array[$k] = $this->link->real_escape_string($v);
             }
         }
 
@@ -153,7 +151,7 @@ class mysqliDrive extends DBAbstract implements IDB
         $params = $this->removeFilterBadChar($params);
 
         // 过滤参数
-        $this->stmt = self::$link->prepare($sql);
+        $this->stmt = $this->link->prepare($sql);
         if (!$this->stmt) {
             $this->errorLog('MySqli->bindParams:prepare sql fail'. $sql);
         }

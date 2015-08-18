@@ -7,31 +7,29 @@
  * $Date: 2015-7-23 上午9:47:06 $
  * $Id: pdo.php 441 2015-07-24 11:51:37Z wangdk $
  */
-require ROOT_PATH."/framework/DB.php";
+require_once ROOT_PATH."/framework/DB.php";
 class PDODrive extends DBAbstract implements IDB
 {
-    private static $link;
+    private $link;
     private $PDOStatement = null;
 
     public function __construct($host, $db_name, $db_user, $db_password, $port = 3306, $unix_socket = '/tmp/mysql.sock')
     {
-        if (!self::$link) {
 
-             $dns = 'mysql:host='.$host.';port='.$port.';dbname='.$db_name;
-             // $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); // php5.36以上支持
-             $options = array();
+         $dns = 'mysql:host='.$host.';port='.$port.';dbname='.$db_name;
+         // $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'); // php5.36以上支持
+         $options = array();
 
-             try {
-                 // 创建 PDO 实例
-                 self::$link = new PDO($dns, $db_user, $db_password, $options);
-             } catch(PDOException $e) {
-                 throw new  KException('PDO->__construct connect failed: ' . $e->getMessage());
-             }
+         try {
+             // 创建 PDO 实例
+             $this->link = new PDO($dns, $db_user, $db_password, $options);
+         } catch(PDOException $e) {
+             throw new  KException('PDO->__construct connect failed: ' . $e->getMessage());
+         }
 
-             // 设置连接编码
-             $this->setCharSet('utf8');
+         // 设置连接编码
+         $this->setCharSet('utf8');
 
-        }
     }
 
     /**
@@ -40,7 +38,7 @@ class PDODrive extends DBAbstract implements IDB
     public  function __destruct()
     {
         // 关闭PDO对象
-        if (self::$link) self::$link=null;
+        if ($this->link) $this->link=null;
     }
 
     /**
@@ -49,7 +47,7 @@ class PDODrive extends DBAbstract implements IDB
      */
     public function setCharSet($charset)
     {
-        self::$link->query("set names '{$charset}'");
+        $this->link->query("set names '{$charset}'");
     }
 
     /**
@@ -59,7 +57,7 @@ class PDODrive extends DBAbstract implements IDB
      */
     private function errorLog($log)
     {
-        throw new Exception($log. self::$link->errorInfo());
+        throw new Exception($log. $this->link->errorInfo());
     }
 
     /**
@@ -69,8 +67,8 @@ class PDODrive extends DBAbstract implements IDB
      */
     private function query($sql)
     {
-        $result = self::$link->query($sql);
-        if (self::$link->errno) {
+        $result = $this->link->query($sql);
+        if ($this->link->errno) {
             $this->errorLog('PDO->query: query exec Fail');
         }
 
@@ -98,7 +96,7 @@ class PDODrive extends DBAbstract implements IDB
             throw new KException('PDO->buildParams:params must array!');
         }
 
-        $this->PDOStatement = self::$link->prepare($sql);
+        $this->PDOStatement = $this->link->prepare($sql);
         return $this->PDOStatement->execute($params);
     }
 
@@ -126,12 +124,12 @@ class PDODrive extends DBAbstract implements IDB
      */
     public function create($sql, $params)
     {
-        $this->PDOStatement = self::$link->prepare($sql);
+        $this->PDOStatement = $this->link->prepare($sql);
         $result = $this->PDOStatement->execute($params);
         if (!$result) {
             $this->errorLog('PDO->create: insert data fail '.$sql);
         }
-        return self::$link->lastInsertId();
+        return $this->link->lastInsertId();
     }
 
     /**
@@ -142,7 +140,7 @@ class PDODrive extends DBAbstract implements IDB
     {
         $data = array();
 
-        $this->PDOStatement = self::$link->prepare($sql);
+        $this->PDOStatement = $this->link->prepare($sql);
 
         $result = $this->PDOStatement->execute($params);
         if (!$result) {

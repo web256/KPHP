@@ -1,9 +1,9 @@
 <?php
-require ROOT_PATH."/framework/DB.php";
+require_once ROOT_PATH."/framework/DB.php";
 
 class mysqlDrive extends DBAbstract implements IDb
 {
-    private static $link;
+    private $link;
 
     /**
      * 初始化mysql数据库
@@ -13,20 +13,18 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     public function __construct($host, $db_name, $db_user, $db_password, $prot)
     {
-        if (!self::$link) {
 
-            $host = empty($prot) ? $host : $host .':'.$prot;
+        $host = empty($prot) ? $host : $host .':'.$prot;
+        $this->link = mysql_connect($host, $db_user, $db_password);
 
-            self::$link = mysql_connect($host, $db_user, $db_password);
-            if (!self::$link) {
-                $this->errorLog('mysql_connect:connect not mysql');
-            }
-
-            $this->setCharset('utf8');
-
-            $this->selectDb($db_name);
+        if (!$this->link) {
+            $this->errorLog('mysql_connect:connect not mysql');
         }
-        return self::$link;
+
+        $this->setCharset('utf8');
+        $this->selectDb($db_name);
+
+        return $this->link;
     }
 
     /**
@@ -34,7 +32,7 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     public function setCharset($charset)
     {
-        mysql_query("set names '".$charset."'", self::$link);
+        mysql_query("set names '".$charset."'", $this->link);
     }
 
     /**
@@ -116,9 +114,9 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     private function query($sql)
     {
-        $res = mysql_query($sql, self::$link);
-        if (!$res && mysql_errno(self::$link)) {
-            throw new  KException('Query:invalid query: ' . mysql_error(self::$link).' '. $sql);
+        $res = mysql_query($sql, $this->link);
+        if (!$res && mysql_errno($this->link)) {
+            throw new  KException('Query:invalid query: ' . mysql_error($this->link).' '. $sql);
         }
 
         return $res;
@@ -133,7 +131,7 @@ class mysqlDrive extends DBAbstract implements IDb
     {
         $sql = $this->buildParams($sql, $params);
         $this->query($sql);
-        return mysql_insert_id(self::$link);
+        return mysql_insert_id($this->link);
     }
 
     /**
@@ -215,7 +213,7 @@ class mysqlDrive extends DBAbstract implements IDb
         $sql = $this->buildParams($sql, $params);
         $result = $this->query($sql);
         if ($result) {
-            $rows = mysql_affected_rows(self::$link);
+            $rows = mysql_affected_rows($this->link);
         }
 
         return $rows;
@@ -233,7 +231,7 @@ class mysqlDrive extends DBAbstract implements IDb
         $result = $this->query($sql);
 
         if($result) {
-            $rows = mysql_affected_rows(self::$link);
+            $rows = mysql_affected_rows($this->link);
         }
 
         return $rows;
@@ -244,6 +242,6 @@ class mysqlDrive extends DBAbstract implements IDb
      */
     public function __destruct()
     {
-        if (self::$link)  mysql_close(self::$link);
+        if ($this->link)  mysql_close($this->link);
     }
 }

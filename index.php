@@ -13,13 +13,18 @@ define('SITE_URL', 'http://'.$_SERVER['HTTP_HOST']);
 /**
  * 定义线上调试模式
  */
-define('POWERBY', (isset($_GET['powerby']) && $_GET['powerby'] == 'alltosun'));
+define('POWERBY', (isset($_GET['powerby']) && $_GET['powerby'] == 'wangdk'));
 
 /**
  * 定义线上调试模式
  */
-define('DEBUG', (isset($_GET['debug']) && $_GET['debug'] == 1));
+define('DEBUG', (isset($_GET['debug']) && $_GET['debug'] == 1) && POWERBY);
 
+
+/**
+ * 定义线上调试模式
+ */
+define('CACHE', (isset($_GET['cache']) && $_GET['cache'] == 0) && POWERBY);
 
 /**
  * 网站根目录

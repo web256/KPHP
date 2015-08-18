@@ -5,7 +5,7 @@
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-8-7 下午5:07:15 $
- * $Id: CacheWrapper.php 1248 2015-08-15 09:10:00Z wangdk $
+ * $Id: CacheWrapper.php 1266 2015-08-17 04:24:49Z wangdk $
  *
  * 缓存原理，类似构建数据库和表
  *     1、ns_project  项目key
@@ -48,38 +48,38 @@ class CacheWrapper
 
     /**
      * 缓存对象 memcache memcached
-     * @var unknown_type
+     * @var string
      *
      */
-    public static $cache;
+    private static $cache;
 
     /**
      * 项目key
-     * @var unknown_type
+     * @var string
      */
     private $ns_project;
 
     /**
      * 项目值val
-     * @var unknown_type
+     * @var string
      */
     private $ns_project_val;
 
     /**
      * 表key
-     * @var unknown_type
+     * @var string
      */
     private $ns_table;
 
     /**
      * 表值value
-     * @var unknown_type
+     * @var string
      */
     private $ns_table_val;
 
     /**
-     * 存储缓存key
-     * @var unknown_type
+     * 开启DEBUG时候，存储缓存key和value
+     * @var string
      */
     public static $debug;
 
@@ -91,6 +91,10 @@ class CacheWrapper
         if (!self::$cache) {
 
             $mc_dirver = KConfig::get('mc_dirver');
+            if (!$mc_dirver) {
+                throw new KException('CacheWrapper->__construct mc_dirver is not empty!');
+            }
+
             require FRAMEWORK_PATH .'/Cache/'.ucfirst($mc_dirver).'.php';
 
             $class_name = $mc_dirver.'Cache';
@@ -106,15 +110,15 @@ class CacheWrapper
     {
        $project_list = array();
 
-       // key
+       // 表 key
        $this->ns_table = $table_name;
 
-       // value，这个value会作为和sql组合存储
+       // 表 value，这个value会作为和sql组合存储
        $this->ns_table_val = $table_name.'_'.$this->getTime();
 
        if (!$this->ns_project_val) return $this;
 
-        // 获取项目空间下值
+        // 读取表空间值，如果表存在就读出来，没有就存储，并赋值给变量 $this->ns_table_val
         $data = self::$cache->get($this->ns_project_val);
         if ($data) {
 
@@ -124,7 +128,6 @@ class CacheWrapper
                 $this->ns_table_val = $project_list[$this->ns_table];
 
             } else {
-
                 $project_list[$this->ns_table] = $this->ns_table_val;
                 self::$cache->set($this->ns_project_val, serialize($project_list), 0);
             }
@@ -197,11 +200,13 @@ class CacheWrapper
     public function setPS($ps_name = '')
     {
         $this->ns_project     = $this->getPS($ps_name);
-        $this->ns_project_val = $this->ns_project.'_'.$this->getTime();
 
         $data = self::$cache->get($this->ns_project);
         if (!$data) {
+
+            $this->ns_project_val = $this->ns_project.'_'.$this->getTime();
             self::$cache->set($this->ns_project, $this->ns_project_val, 0);
+
         } else {
             $this->ns_project_val = $data;
         }
@@ -222,6 +227,7 @@ class CacheWrapper
 
 
     /**
+     * 必须设置项目空间名，表空间名
      * 获取cache唯一的key
      * @param unknown_type $key
      * @return boolean|string
@@ -236,10 +242,11 @@ class CacheWrapper
     }
 
     /**
+     * 要求 项目空间名，表名同时都要设置
      * 设置缓存
-     * @param unknown_type $key
-     * @param unknown_type $val
-     * @param unknown_type $expire
+     * @param unknown_type $key     设置键
+     * @param unknown_type $val     设置值
+     * @param unknown_type $expire  过期时间
      */
     public function setCache($key, $val, $expire)
     {
@@ -260,7 +267,10 @@ class CacheWrapper
         if (!$key) return false;
 
         $data = self::$cache->get($key);
+
         if (DEBUG) self::$debug[$key] = serialize($data);
+        if ($data) $data = unserialize($data);
+
         return $data;
     }
 

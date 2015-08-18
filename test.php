@@ -1,25 +1,50 @@
 <?php
 echo '<pre>';
-global $mc;
-
-$mc->flushAll();
-
-// 设置haha为项目空间，user表下的空间，wangdk key
-var_dump($mc->setPS('haha')->setNs('user')->setCache('wangdk', "wangdekang88888111", 180));
-var_dump($mc->setPS('haha')->setNS('user')->setCache('wangdk1', "wangdekang88888111", 180));
-var_dump($mc->setPS('haha')->setNS('goods')->setCache('wangdk', "wangdekang88888", 180));
-
-$mc->setPS('haha')->delNS('user');
-$mc->setPS('haha')->setNs('goods')->deleteCache('wangdk');
 
 
+// 新增
+// $data['user_name'] = 'wangdk';
+// $data['avatar']    = '王德康';
+// $id = _model('user')->create($data);
+// print_r($id);
 
-var_dump($mc->setPS('haha')->setNS('goods')->getCache('wangdk'));
-var_dump($mc->setPS('haha')->setNS('user')->getCache('wangdk1'));
-var_dump($mc->setPS('haha')->setNS('user')->getCache('wangdk'));
 
+// 更新
+// $set = 'set `user_name` = ?';
+// $where = ' where id = ?';
+// $params = array('王硕vv1d1',13);
+// $data = _model('user')->update($set, $where, $params);
+// print_r($data);
+
+// 单条查询
+// $sql = 'where  id = ?';
+// $params = array(13);
+
+// $data =_model('user')->read($sql, $params);
+// print_r($data);
+
+
+// 多条查询
+// $sql = 'where 1 = ? order by id DESC LIMIT 3';
+// $params = array(1);
+// $data = _model('user')->getList($sql, $params);
+// print_r($data);
+
+
+
+// 删除
+// $sql = 'where id = ?';
+// $params = array(5);
+// $data = _model('user')->delete($sql, $params);
+// print_r($data);
+
+// $sql = 'where 1= ?';
+// $params = array(1);
+// $data = _model('user')->getTotal($sql, $params);
+// print_r($data);
 
 print_r(CacheWrapper::$debug);
+print_r(Model::$debug);
 
 
 

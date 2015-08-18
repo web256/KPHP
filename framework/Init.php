@@ -17,4 +17,19 @@ require FRAMEWORK_PATH.'/Model.php';
 require FRAMEWORK_PATH.'/ModelRes.php';
 
 
+
+/**
+ * model 数据库操作
+ * @param unknown_type $table
+ */
+
+function _model($table) {
+
+    // 单例
+    static $model;
+    if (!$model) $model = new ModelRes($table);
+
+    return $model;
+}
+
 ?>

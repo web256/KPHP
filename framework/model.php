@@ -34,20 +34,32 @@ class Model
     private $table;
 
     /**
+     * DEBUG 开启的时候，记录所有的SQL
+     * @var unknown_type
+     */
+    public static $debug;
+
+    /**
+     * DEBUG 开启的时候，记录所有的SQL的数据
+     * @var unknown_type
+     */
+    public static $debug_vals;
+
+    /**
      * 初始化Model类
      * @param unknown_type $table  要操作的表名
      * @param unknown_type $connect_type  连接主库，还是从库，默认主库 1=主库，2=从库
      */
     public function __construct($table, $connect_type = 1)
     {
-        $prefix      = KConfig::get('db_table_prefix');
-        $this->table = $prefix.$table;
+        // 表前缀，在ModelRes 设置
+        $this->table = $table;
 
         $db_dirver = KConfig::get('db_dirver');
         if (!$db_dirver) throw  new KException('Model->__construct config db_dirver not empty!');
 
         $class_name = $db_dirver.'Drive';
-        require FRAMEWORK_PATH.'/drives/'.$db_dirver.'.php';
+        require_once FRAMEWORK_PATH.'/drives/'.$db_dirver.'.php';
 
         if ($connect_type  == 1) {
             // 主库
@@ -177,6 +189,20 @@ class Model
         }
     }
 
+    /**
+     * 开启DEBUG的时候，记录所有的SQL
+     * @param unknown_type $sql
+     * @package unknown_type $params
+     * @param unknown_type $data
+     */
+    public static function addDeBug($sql, $params, $data)
+    {
+       if (DEBUG)  {
+           $info[$sql]['data']   = $data;
+           $info[$sql]['params'] = $params;
+           self::$debug[] = $info;
+       }
+    }
 
     /**
      * 新增一条记录
@@ -192,8 +218,11 @@ class Model
         $key_list   = array_keys($data);
         $value_list = array_values($data);
 
-        $sql = 'insert into '.$this->table.'('.join(',', $key_list).') values('.join(',', array_fill(0, count($value_list), '?')).')';
-        return self::$db->create($sql, $value_list);
+        $sql = 'insert into `'.$this->table.'`('.join(',', $this->addBackticksParams($key_list)).') values('.join(',', array_fill(0, count($value_list), '?')).')';
+        $insert_id = self::$db->create($sql, $value_list);
+
+        self::addDeBug($sql, $value_list, $insert_id);
+        return $insert_id;
     }
 
     /**
@@ -207,9 +236,9 @@ class Model
     public static function getWhereToSql($fields, $where, $table, $is_limit = 0)
     {
         if ($is_limit) {
-            $sql = 'select '.$fields.' from '.$table.' '.$where.' limit 1';
+            $sql = 'select '.$fields.' from `'.$table.'` '.$where.' limit 1';
         } else {
-            $sql = 'select '.$fields.' from '.$table.' '.$where;
+            $sql = 'select '.$fields.' from `'.$table.'` '.$where;
         }
 
         return $sql;
@@ -228,7 +257,10 @@ class Model
     public function read($where, $params, $fields = '*')
     {
         $sql = self::getWhereToSql($fields, $where, $this->table, 1);
-        return self::$db->getOne($sql, $params);
+        $info = self::$db->getOne($sql, $params);
+
+        self::addDeBug($sql, $params, $info);
+        return $info;
     }
 
     /**
@@ -238,8 +270,11 @@ class Model
      */
     public function getList($where, $params, $fields = '*')
     {
-        $sql = self::getWhereToSql($fields, $where, $this->table);
-        return self::$db->getAll($sql, $params);
+        $sql  = self::getWhereToSql($fields, $where, $this->table);
+        $list = self::$db->getAll($sql, $params);
+
+        self::addDeBug($sql, $params, $list);
+        return $list;
     }
 
     /**
@@ -250,7 +285,7 @@ class Model
      */
     public static function getWhereToTotalSql($fields, $where, $table)
     {
-        $sql = 'select count('.$fields.') from '.$table.' '.$where;
+        $sql = 'select count('.$fields.') from `'.$table.'` '.$where;
         return $sql;
     }
 
@@ -263,7 +298,10 @@ class Model
     public function getTotal($where, $params, $fields = '*')
     {
         $sql = self::getWhereToTotalSql($fields, $where, $this->table);
-        return self::$db->getTotal($sql, $params);
+        $info = self::$db->getTotal($sql, $params);
+
+        self::addDeBug($sql, $params, $info);
+        return $info;
     }
 
     /**
@@ -274,8 +312,11 @@ class Model
     public function update($set, $where, $params = array())
     {
         if (!$where) return false;
-        $sql = 'update '.$this->table.' '.$set.' '.$where;
-        return self::$db->update($sql, $params);
+        $sql = 'update `'.$this->table.'` '.$set.' '.$where;
+        $result = self::$db->update($sql, $params);
+
+        self::addDeBug($sql, $params, $result);
+        return $result;
     }
 
     /**
@@ -286,7 +327,27 @@ class Model
     public function delete($where, $params = array())
     {
         if (!$where) return false;
-        $sql = 'delete from '.$this->table.' '.$where;
-        return self::$db->delete($sql, $params);
+        $sql = 'delete from `'.$this->table.'` '.$where;
+        $result = self::$db->delete($sql, $params);
+
+        self::addDeBug($sql, $params, $result);
+        return $result;
+    }
+
+    /**
+     * 为必要的SQL添加反引号
+     * @param unknown_type $data
+     */
+    public function addBackticksParams($data)
+    {
+        if (is_array($data)) {
+            foreach ($data as $k => $v) {
+                $data[$k] = '`'.$v.'`';
+            }
+        } else if (is_string($data)) {
+            $data = '`'.$data.'`';
+        }
+
+        return $data;
     }
 }
