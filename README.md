@@ -16,3 +16,6 @@
 # 2015-08-15 更新
 # 1、增加 Memcache 和 Memcached 扩展
 # 2、增加 Cache层，支持项目，表命名空间
+
+# 2015-08-18 更新
+# 1、model和cache混合 提供_model方法
