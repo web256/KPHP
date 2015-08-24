@@ -37,6 +37,9 @@ KConfig::set('mc', array(
     array('mc_host' => '127.0.0.1', 'mc_port' => 11212)
 ));
 
+KConfig::set('admin_users', array(
+    1, 20, 30
+));
 
 
 ?>

@@ -1,0 +1,6 @@
+/**
+ * ie8css问题
+ */
+
+/* 后台登录框 */
+.input-prepend input { height:18px !important; line-height:18px; min-height:18px !important; }

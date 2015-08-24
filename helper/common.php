@@ -9,6 +9,43 @@
  */
 
 /**
+ *
+ * @param unknown_type $url
+ * @param unknown_type $flag
+ */
+function setUrl($url, $flag = '')
+{
+   if ($flag) $url = $url.$flag;
+   return SITE_URL.'?anu='.$url;
+}
+
+/**
+ * 自动加载类函数
+ * @param unknown_type $class_name
+ */
+function autoload_hanlder($class_name)
+{
+    $type  = '';
+    $class = '';
+
+    $arr = explode('_', $class_name);
+    if ($arr) {
+
+        if (isset($arr[1]) && $arr[1]) {
+            $type   = $arr[1];
+            $class  = $arr[0];
+        }
+
+        // 加载 helper
+        if ($type == 'helper') {
+            require ROOT_PATH.'/module/'.$class.'/helper/'.$class.'.php';
+        }
+
+        // _widget
+    }
+}
+
+/**
  * 设置默认错误处理
  * @param unknown_type $errno  错误号
  * @param unknown_type $errstr 错误信息
@@ -75,7 +112,8 @@ function error_handler($errno, $errstr, $errfile, $errline){
  */
 function exception_handler($exception)
 {
-    $exception->showError();
+   // $exception->showError();
+    KException::showError2($exception);
 }
 
 /**
@@ -85,20 +123,38 @@ function exception_handler($exception)
  */
 class KException extends Exception
 {
-    public function showError()
+//     public function showError()
+//     {
+//         echo "<pre>\n";
+//         print "<b>KException：{$this->getMessage()}</b> in <b>{$this->getFile()}</b> on line <b>{$this->getLine()}</b>\n";
+
+//         foreach($this->getTrace() as $i=>$l){
+//             // OOP 和 非OOP
+//             $class = isset($l['class']) ? $l['class'] : '';
+//             $type = isset($l['type']) ? $l['type'] : '';
+
+//             print "[$i] in function <b>{$class}{$type}{$l['function']}</b>";
+//             if($l['file']) print " in <b>{$l['file']}</b>";
+//             if($l['line']) print " on line <b>{$l['line']}</b>";
+//             print "\n";
+//         }
+//         echo "\n</pre>";
+//     }
+
+    public static function showError2($obj)
     {
         echo "<pre>\n";
-        print "<b>KException：{$this->getMessage()}</b> in <b>{$this->getFile()}</b> on line <b>{$this->getLine()}</b>\n";
+        print "<b>KException：{$obj->getMessage()}</b> in <b>{$obj->getFile()}</b> on line <b>{$obj->getLine()}</b>\n";
 
-        foreach($this->getTrace() as $i=>$l){
-            // OOP 和 非OOP
+        foreach($obj->getTrace() as $i=>$l){
+        // OOP 和 非OOP
             $class = isset($l['class']) ? $l['class'] : '';
             $type = isset($l['type']) ? $l['type'] : '';
 
-            print "[$i] in function <b>{$class}{$type}{$l['function']}</b>";
-            if($l['file']) print " in <b>{$l['file']}</b>";
-            if($l['line']) print " on line <b>{$l['line']}</b>";
-            print "\n";
+                    print "[$i] in function <b>{$class}{$type}{$l['function']}</b>";
+                    if(isset($l['file'])) print " in <b>{$l['file']}</b>";
+                    if(isset($l['line'])) print " on line <b>{$l['line']}</b>";
+                            print "\n";
         }
         echo "\n</pre>";
     }

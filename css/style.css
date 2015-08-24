@@ -1,0 +1,247 @@
+@charset "UTF-8";
+/** 
+ *Description：巨惠通pc端
+ *Date       ：2014.06.23
+ *Author     ：lij
+**/
+body{ font:14px "Microsoft yahei"; }
+input,button{ font-family:"Microsoft yahei";}
+.select{font-family:Arial,Helvetica,sans-serif;}
+#wrap{}
+.header{ width:100%;}
+.inner{ position:relative; width:1000px; height:100%; margin:0 auto;}
+.top{ height:42px; background:url(../images/bar-bg.jpg) repeat 0 0;}
+.logo-tel a,.logo-jht a{ display:block; padding-top:8px;}
+.logo-tel,.logo-jht{ width:95px; margin-right:35px;}
+.top-login{ height:42px; line-height:42px; color:#fff; text-shadow:1px 1px 8px rgba(0,0,0,1);}
+.top-login a{ color:#fff;}
+.top-login span{ font-size:12px; padding-right:10px;}
+.topbar{ height:62px; background:#eb4645; border-top:3px solid #d61738; box-shadow:0 1px 5px rgba(0,0,0,.3);}
+.nav{ float:left; padding-top:13px;}
+.nav li{ float: left; margin-right:20px; _display:inline;}
+.nav li a{ display:inline-block; height:35px; line-height:35px; padding:0 12px; font-size:18px; color:#fff;}
+.nav li a.curr{ background:#fff; color:#eb4645; border-radius:5px; box-shadow:0 1px 5px rgba(0,0,0,.2);}
+.infonav{ float:right; padding-top:14px;}
+.infonav li{ position:relative; float:left; height:34px; line-height:34px; padding-left:54px;}
+.infonav li a{ display:inline-block; font-size:18px; color:#fff;}
+.arrow{ display:inline-block; width:0; height:0; font-size:0; border:6px dashed transparent; border-left:8px solid #fff; margin-left:10px; vertical-align:middle;}
+.inav1{ border-right:1px dashed #fff; padding-right:20px;}
+.inav2{ margin-left:20px;}
+.icon-top{ position: absolute; top:0; left:0; display:block; width:55px; height:48px; background:url(../images/shadow.png) no-repeat 2px 12px;}
+.icon-top i{ display:inline-block; width:36px; height:36px; background:url(../images/icon2.png) no-repeat 0 0;}
+.inav1 .icon-top i{ background-position:0 -50px;}
+.inav2 .icon-top i{ background-position:-50px -50px;}
+.icon-top img{ width:36px; height:36px; border-radius:50%; overflow:hidden;}
+
+.container{ width:1000px; margin:0 auto; padding-bottom:50px;}
+.box1{}
+.banner{ position:relative; width:700px;}
+.banner-list{ height:350px; overflow:hidden;}
+.banner-list li{ float:left; height:350px;}
+.pages{ position:absolute; bottom:10px; right:50px;}
+.pages a,.pages span{ display:inline-block; width:14px; height:14px;}
+.pages a{ background:#eb4645; border-radius:50%; margin-left:10px;}
+.pages a.selected{ background:#bfbfbf;}
+.pages span{ text-indent:-9999em;}
+
+.business{ width:290px;}
+.bs-tab{ height:62px; line-height:62px;}
+.bs-tab a{ display:inline-block; width:140px; text-align:center; color:#535353; font-size:18px;}
+.bs-tab a.curr{ color:#ee7272;}
+.bsbox{ background:url(../images/shadow2.png) no-repeat 0 bottom; padding-bottom:18px;}
+.bs-list{ border-top:1px solid #eee; border-left:1px solid #eee;}
+.bs-list li{ float:left; width:143px; height:95px; border-right:1px solid #eee; border-bottom:1px solid #eee;}
+
+.box2{}
+.titbar{ position:relative; height:50px; line-height:50px;}
+.link-wrap{}
+.link-wrap a{ display:inline-block; color:#8a8a8a; font-size:18px; margin-right:15px;}
+.tit{ color:#eb4645;}
+.tit em{ display:inline-block; height:28px; line-height:28px; padding-left:8px; font-size:1.4em; color:#eb4645; padding:0 10px; border-left:1px solid #eb4645; vertical-align:middle;}
+.tit span{ color:#8a8a8a; padding-left:10px;}
+.tit span.red{ color:#eb4645;}
+.icon{ display:inline-block; width:32px; height:34px; background:url(../images/icon2.png) no-repeat 0 0; vertical-align:middle; padding-right:10px;}
+.icon-tj{ background-position:0 0;}
+.icon-yh{ background-position:-52px 0;}
+.icon-rm{ background-position:-102px 0;}
+.icon-tg{ background-position:-156px 0;}
+.icon-zx{ background-position:-204px 0;}
+.icon-pz{ background-position:-254px 0;}
+.icon-zk{ background-position:-305px 0;}
+
+.coupon-center{ padding-top:15px; border-top:1px dashed #dcdcdc;}
+.coupon-list{}
+.coupon-list li{ float:left; width:322px; border:1px solid #e5e5e5; margin:0 14px 20px 0;}
+.coutop{ width:298px; padding:12px;}
+.coutop h4{ padding:5px 0 2px; line-height:20px;}
+.coutop h4 a{ color:#434343;}
+.coutop p{ color:#707070; font-size:12px;}
+.coubottom{ padding:6px 12px; height:32px; line-height:30px; border-top:1px dashed #e5e5e5;}
+.surplus-num{ font-size:16px; color:#434343;}
+.surplus-num em{ color:#d92d2b;}
+.totle-num{ font-size:12px; color:#7d7d7d; padding-left:15px;}
+
+.btn-wrap{ padding:10px 0; text-align:center;}
+.btn-more{ display:inline-block; width:145px; height:40px; line-height:40px; text-align:center; border:1px solid #eee; border-radius:4px; color:#a0a0a0; font-size:20px;}
+.btn-more i{ display:inline-block; width:22px; height:20px; background:url(../images/icon2.png) no-repeat -102px -50px; vertical-align:middle; margin-right:5px;}
+
+.footer{ height:46px; line-height:46px; background:#eee;}
+.footer p{ text-align:center; color:#919191;}
+.footer p span{ padding-right:40px;}
+.footer p a{ color:#919191;}
+
+.error{ text-align:center; padding-top:200px;}
+.error-msg{ width:331px; height:270px; background:url(../images/error-msg.png) no-repeat 0 0; margin:0 auto; text-align:center;}
+.error-msg span{ display:inline-block; padding-top:175px; color:#959595;}
+
+/*--所有商家--*/
+.bscenter{}
+.bsall{ padding-bottom:30px;}
+.bsall li{ margin-top:20px;}
+.logo-bs{ display:block; width:143px; height:95px; border:1px solid #e5e5e5;}
+.btn-down{ display:block; width:144px; height:38px; line-height:38px; text-align:center; background:#eb4645; color:#fff; margin-top:10px; text-shadow:1px 1px 3px rgba(0,0,0,.4); border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.3);}
+.bsinfor{ margin-left:165px; border:1px solid #e5e5e5; padding:10px 15px; height:124px; overflow:hidden;}
+.bsinfor h3{ font-size:16px; color:#000; line-height:28px;}
+.bsinfor h3 a{ color:#00a0e9;}
+.bsinfor p{ color:#434343; line-height:24px;}
+
+/*--我的巨惠通--*/
+.jht{}
+.jht-main{ width:750px; height:auto;}
+.topnav{ height:50px; line-height:50px; color:#535353;}
+.topnav a{ color:#535353;}
+.coup-info{ width:748px; border:1px solid #e5e5e5;}
+.infor{ padding:12px;}
+.avatar{ display:block; width:70px; height:70px;}
+.avatar img{ width:100%; height:100%;}
+.infortxt{ margin-left:95px; color:#535353; padding-top:13px;}
+.t1{ color:#000;}
+.t1 em{ color:#00a0e9;}
+.coupshow{}
+.coupshow table{ width:100%;}
+.coupshow th{ height:46px; line-height:46px; text-align:center; z-index:16px; color:#fff; background:#eb4645;}
+.coupshow td{ padding:10px 0; text-align:center; font-size:12px; border-bottom:1px dashed #e5e5e5;}
+a.link-detail,a.link-use{ display:block; font-size:14px; text-decoration:underline;}
+.link-detail{ color:#00a0e9;}
+.link-use{ color:#eb4645;}
+
+.sub-jht{ width:232px;}
+.msg1{ font-size:18px; color:#eb4645; height:50px; line-height:50px;}
+.rulewrap{ width:210px; padding:10px; border:1px solid #e5e5e5;}
+.rule-list{ color:#898989; padding:0px 0px 30px 20px; list-style:decimal;}
+.rule-list li{ line-height:22px; padding-bottom:10px;}
+
+/*--优惠券详情--*/
+.coup-detail{ width:690px;}
+.coup-detail .topnav{ height:61px; line-height:61px;}
+.detailbox{ border:1px solid #e5e5e5;}
+.dinfo{ padding:12px;}
+.with-map{ display:block; width:298px; height:196px;}
+.inforight{ margin-left:315px;}
+.inforight h2{ font-size:18px; color:#434343; border-bottom:1px dashed #e5e5e5; padding-bottom:5px;}
+.msgbox{ padding:5px 0; line-height:24px;}
+.msg2{ color:#434343;}
+.msg3{ font-size:16px; color:#434343;}
+.msg3 em{ color:#d92d2b;}
+.btn-wrap2{ padding-top:10px;}
+.btn-wrap2 a{ margin-right:5px;}
+.intro{ margin-top:20px; border:1px solid #e5e5e5;}
+.intro-list{ padding:12px;}
+.intro-list dt{ font-size:18px; color:#535353; line-height:30px;}
+.intro-list dd{ color:#898989; line-height:28px;}
+.bortto{ border-bottom:1px dashed #e5e5e5;}
+.over{ display:inline-block; height:40px; line-height:40px; padding:0 10px; color:#eb4645;}
+.msg-success{ padding:5px 0 5px 60px;  background:url(../images/msg-success.png) no-repeat 10px center; color:#707070;}
+.msg-success p{ line-height:24px;}
+.msg6{ color:#434343;}
+.msg-code,.msg-code2 em{ color:#eb4645;}
+.msg4{ font-size:12px; color:#707070;}
+.msgbox2{ padding:15px 25px; border-top:1px dashed #e5e5e5;}
+.msg-code2{ color:#434343; padding-right:10px;}
+.msg5{ font-size:16px; color:#00a0e9; font-weight:bold;}
+
+.pop-msg{ position:absolute; top:320px; left:50%; margin-left:-280px; width:558px; height:auto; background:#fff; background:rgba(255,255,255,.95); border:3px solid #666; border:3px solid rgba(0,0,0,.6); border-radius:10px; color:#535353;}
+
+.msg-failure{ padding:5px 50px 15px 95px;  background:url(../images/msg-failure.png) no-repeat 30px center; color:#8a8a8a;}
+.msg-failure p{ line-height:24px;}
+.msg-failure p.msg7{ color:#ea4646; height:48px; line-height:48px; font-size:18px;}
+.btn-wrap3{ padding-top:10px;}
+
+/*--按钮--*/
+.btn{ display:inline-block; width:94px; height:32px; text-align:center; line-height:30px; color:#fff; text-shadow:1px 1px 3px rgba(0,0,0,.4); border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.btn-danger{ background:#eb4645;}
+.btn-primary{ background:#aaa;}
+.btn-success{ background:#80c269;}
+.btn-info{ background:#00a0e9;}
+.btn-large{ height:40px; /*padding:0 15px; width:auto;*/ width:145px; text-align:center; line-height:40px; font-size:16px;}
+.btn-small{}
+.btn-large2{ height:40px; padding:0 15px; width:auto; text-align:center; line-height:40px; font-size:16px;}
+
+/*--整点抽奖--*/
+.msgbg{ background:#f9f9f9;}
+.top2{ height:45px; background:#eb4645; border-bottom:3px solid #d61738;}
+.top2 .user-name{ display:block; height:100%; line-height:45px; color:#fff;}
+.box3{ padding-top:6px;}
+.banner2{ position:relative; height:496px; background:url(../images/lottery-msg.jpg) no-repeat 0 0;}
+.code{ position:absolute; top:25px; right:25px;background-color:#fff;padding:20px;}
+.contbox{}
+.msgbox3{ width:215px; padding:20px; border:1px solid #dcdcdc; font-size:16px; color:#727272; line-height:25px; margin-top:10px;}
+.intro2{ margin-left:305px;}
+.t2{ font-size:22px;}
+.intro-list2{ padding:10px 0; line-height:25px;}
+.intro-list2 dt{ font-size:18px;}
+.intro-list2 dd{ font-size:16px; color:#727272;}
+
+/*--登录--*/
+.loginbox{}
+.login-tit{}
+.lotit1,.lotit2{ display:block; height:50px; line-height:50px; color:#535353; font-size:16px;}
+.lotit1{ float:left; width:610px;}
+.lotit2{ float:right; width:345px;}
+.logincenter{ border:1px solid #e5e5e5;}
+.login-tel{ padding:10px 0 40px; width:610px; border-right:1px dashed #eee;}
+.login-bl{ font-size:16px; margin-top:25px;}
+.login-bl label{ display:inline-block; width:100px; height:54px; line-height:54px; text-align:right; vertical-align:middle;}
+.login-bl input{ height:20px; line-height:20px; padding:16px 10px; border:1px solid #e3e4e8; border-radius:5px; color:#a0a0a0;}
+.ws{ color:#535353; padding-left:10px;}
+.code-show{ display:inline-block; width:142px; height:50px; border:1px solid #e3e4e8; border-radius:5px; vertical-align:middle; overflow:hidden;}
+.ws em{ font-size:12px; padding-left:10px;}
+.login-bl2{ padding:10px 0 0 105px;}
+.btn-login{ display:inline-block; width:202px; height:50px; line-height:50px; text-align:center; color:#fff; background:#eb4645; border:0 none; font-size:24px; border-radius:5px;}
+.msg8{ font-size:12px; padding-left:10px; color:#535353;}
+.msg8 em{ color:#eb4645;}
+.txt1{ width:380px;}
+.txt2{ width:120px;}
+.login-bl .btn{ margin-left:10px;}
+
+.login-other{}
+.lg-other-list{ padding:120px 0 0 80px;}
+.lg-other-list dt{ height:55px; line-height:55px;}
+.lg-other-list dd{ float:left; margin-right:20px; box-shadow:1px 1px 5px rgba(0,0,0,.3); _display:inline;}
+.lg-other-list dd a{ display:inline-block;}
+
+/*--首页商家分类下拉--*/
+.btnBusi{}
+
+.busi-menu{ position:absolute; top:50px; right:0; width:572px; height:auto; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,.3);}
+.bs-arrow{ position:absolute; right:135px; top:-15px; display:inline-block; width:0; height:0; font-size:0; border:8px solid transparent; border-bottom:8px dashed #eb4545;}
+.bs-drop-list{ padding:6px 6px 0;}
+.bs-drop-list li{ float:left; width:88px; height:38px; margin:0 4px 4px 0; border:1px solid #eee; text-align:center; line-height:38px; _display:inline;}
+.bs-drop-list li a{ display:block; font-size:16px; color:#626262;}
+.msg-box{ height:40px; line-height:40px; border-top:1px solid #e5e5e5; padding:0 25px; color:#535353;}
+
+.more{ color:#eb4545; font-size:16px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

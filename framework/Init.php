@@ -13,11 +13,18 @@ date_default_timezone_set("PRC");
 require FRAMEWORK_PATH.'/KConfig.php';
 require FRAMEWORK_PATH.'/CacheWrapper.php';
 
+/**
+ * 加载model
+ */
 require FRAMEWORK_PATH.'/Model.php';
 require FRAMEWORK_PATH.'/ModelRes.php';
 
-
-
+/**
+ * smarty类的封装
+ */
+require FRAMEWORK_PATH.'/Response.php';
+require FRAMEWORK_PATH.'/Request.php';
+require FRAMEWORK_PATH.'/Pager.php';
 /**
  * model 数据库操作
  * @param unknown_type $table

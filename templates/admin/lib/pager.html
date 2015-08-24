@@ -1,0 +1,29 @@
+{* $Id: pager.html 53047M 2013-08-14 01:39:08Z (local) $ *}
+{if isset($pager)}
+<div class="pages">
+  <div class="pagination {if $float}{$float}{else}pagination-right{/if}">
+    <div class="total">总共<strong>{$pager->getPages()}</strong>页 / <strong>{$pager->getPerPage()}</strong>篇每页</div>
+    <ul>
+      <li><a href="/{$pager->link($pager->begin())}">首页</a></li>
+      {if $pager->getPage() > 1}
+        <li><a href="/{$pager->link($pager->prev())}{$attr}">前一页</a></li>
+      {/if}
+      {foreach $pager->getPagesArray(9) as $k=>$v}
+        {if $pager->getPage() == $v}
+          <li class="active">
+            <a href="javascript:void(0);">{$v}</a>
+          </li> 
+        {else}
+          <li>
+            <a href="/{$pager->link($v)}{$attr}">{$v}</a>
+          </li>
+        {/if}
+      {/foreach}
+      {if $pager->getPage() < $pager->getPages()}
+        <li><a href="/{$pager->link($pager->next())}{$attr}">后一页</a></li>
+        <li><a href="/{$pager->link($pager->end())}">末页</a></li>
+      {/if}
+    </ul>
+  </div>
+</div>
+{/if}

@@ -1,0 +1,387 @@
+/* CSS Document */
+@charset "utf-8";
+/*----------
+功能：NBA首页
+时间：2013.9.8
+作者：洪秋霞
+-----------*/
+body ,.outer{}
+
+/*首页 左边内容*/
+.maright20{ margin:0 19px 19px 0;}
+.marbot20{ margin:0 0 19px 0;}
+.index-left{ width:766px;}
+.index-left ,.index-right{ margin-bottom:-19px;*margin-bottom:0px; _margin-bottom:-64px;}
+.col-menu{ background:none!important;}
+.videoBox{ width:362px; border:1px solid #ebebeb;}
+.index-right{ width:234px; }
+
+/*首页图片轮播*/
+.videoBox{}
+#picPlay{ position:relative; width:362px; height:389px; overflow:hidden;}
+.videoBox ul{ position:absolute; top:0px; left:0px;height:389px;}
+.videoBox ul li{ position:relative; float:left;width:362px; height:389px; overflow:hidden;}
+.v-con{ position:absolute; bottom:0px; left:0px; width:342px; height:55px; background:url(../../images/mayer.png) repeat; padding:10px 10px;}
+.v-con p{ color:#fff; font-size:20px; height:30px; overflow:hidden; margin-bottom:5px;}
+.v-con .time{ font-size:12px;color:#feffff;}
+.play-btn{ display:block; position:absolute; width:65px; height:63px; top:235px; left:27px; background:url(../../images/icons/icon2.png) -1px -349px no-repeat;}
+.play-btn:hover{ opacity:0.7; filter:alpha(opacity=70);}
+.btnLeft ,.btnRight{ display:block; width:36px; height:36px; position:absolute; z-index:1; top:130px;}
+.btnLeft:hover ,.btnRight:hover{ opacity:0.8; filter:alpha(opacity=80)}
+.btnLeft{ left:10px; background:url(../../images/icons/icon2.png) -83px -337px no-repeat;}
+.btnRight{ left:314px; background:url(../../images/icons/icon2.png) -83px -378px no-repeat;}
+
+.the-news{width:335px; height:372px; border:1px solid #ebebeb; overflow:hidden; background:#fff;padding:18px 15px 0 15px;}
+.part-box ul{margin-bottom:10px;}
+.part-ul{ border-bottom:1px solid #ebebeb; padding-bottom:8px;list-style:none;}
+.part-ul li{/* text-indent:43px;*/position:relative;}
+.part-ul .part-tit{display:inline; text-indent:0px; margin-right:5px;}
+.part-ul .part-style a{font-size:16px; color:#000; }
+.part-ul  li{ line-height:30px; height:30px;}
+.part-ul li a{ color:#2476af; font-size:12px;}
+.part-box li a:hover{ text-decoration:underline;}
+.part-box .part-title{ height:30px; margin-bottom:0px;}
+.part-box .part-title li{ margin-right:5px; height:30px; float:left;}
+.part-box .part-title li a{ color:#000; font-size:16px;}
+.part-box .part-title li a:hover{ text-decoration:underline;}
+.focu-li .small-icon{ top:7px; left:0px;}
+.small-icon{padding:0px 7px; font-size:12px;text-indent:0px; line-height:18px; height:18px;color:#FFF;  background:#52adbf; margin-right:5px;}
+.text-indent0{ text-indent:43px;}
+/*.blue-after{background:#52adbf;}
+.on-line{background:#4ab68b;}
+.out-bad{background:#f4783c;}*/
+
+/*我的关注*/
+.my-focus-box{ width:342px; border:1px solid #ebebeb; height:601px;background:#fff; padding:10px;}
+.focu-logo{ margin-top:20px; position:relative; z-index:10;}
+.focu-logo a{ display:block; width:47px; height:47px; margin:0 10px 20px 10px; _margin:0 7px 20px 10px; float:left;}
+/*弹层*/
+.focu-box{ position:absolute; top:2px; width:471px; left:353px; background:#2576b1; z-index:100; padding:15px 5px 0 5px;*padding:15px 5px 15px 5px;}
+.focu-box a{ display:block;width:47px; height:47px; margin:0 10px 20px 10px;_margin:0 7px 20px 10px; float:left;}
+.poin-tri{ display:block; width:10px; height:24px; position:absolute; left:-10px; top:80px; 
+background:url(../../images/icons/icon2.png) -282px -305px no-repeat; }
+.my-title{ width:100%; text-align:center; height:32px; font-size:18px;line-height:32px; color:#666; line-height:32px; background:#f6f6f6; margin-bottom:15px;}
+.focu-info{ height:112px; margin:20px 0; width:334px;}
+/*.team-box .focu-info{ *margin-left:-15px}*/
+.team-box .focu-con{*margin-left:-15px!important;}
+.focus-ul .focu-li{ height:112px; margin:10px 0 5px 0; padding-bottom:15px; border-bottom:1px dotted #ebebeb;}
+.focus-ul .focu-info{ margin:0 0 0 0;}
+.focu-li .info-right .info-con{ margin-top:0px;}
+.info-left{ width:160px; margin-right:10px;}
+.info-right{ width:164px;}
+.info-right p{ margin-top:-3px;}
+.info-right p a{ font-size:14px; color:#2576b1;}
+.info-right .info-con{ margin-top:12px; line-height:22px; font-size:12px; color:#595959;}
+.focus-ul li{ height:36px; line-height:36px;}
+.focus-ul li span{ display:inline-block; padding:0 10px 0 7px;margin-right:3px; font-size:12px; height:16px; line-height:16px; color:#fff;}
+.focus-ul li p a{ color:#2576b1; font-size:14px;}
+.focus-ul li a{ color:#2576b1; font-size:12px;}
+.focus-ul li a:hover ,.info-right p a:hover{ text-decoration:underline;}
+.icon-01{background:url(../../images/icons/icon1.png) right 0px no-repeat;}
+.icon-02{ background:url(../../images/icons/icon1.png) right -17px no-repeat;}
+.icon-03{ background:url(../../images/icons/icon1.png) right -34px no-repeat;}
+.icon-04{background:url(../../images/icons/icon1.png) right -51px no-repeat;}
+.icon-05{background:url(../../images/icons/icon1.png) right -68px no-repeat;}
+.icon-06{ background:url(../../images/icons/icon1.png) right -85px no-repeat;}
+.icon-07{ background:url(../../images/icons/icon1.png) right -102px no-repeat;}
+.icon-08{background:url(../../images/icons/icon1.png) right -119px no-repeat;}
+.icon-09{background:url(../../images/icons/icon1.png) right -136px no-repeat;}
+.icon-10{ background:url(../../images/icons/icon1.png) right -153px no-repeat;}
+.icon-11{ background:url(../../images/icons/icon1.png) right -170px no-repeat;}
+.icon-12{background:url(../../images/icons/icon1.png) right -187px no-repeat;}
+.icon-13{background:url(../../images/icons/icon1.png) right -204px no-repeat;}
+.icon-14{background:url(../../images/icons/icon1.png) right -221px no-repeat;}
+.icon-15{ background:url(../../images/icons/icon1.png) right -238px no-repeat;}
+.icon-16{ background:url(../../images/icons/icon1.png) right -255px no-repeat;}
+.icon-17{background:url(../../images/icons/icon1.png) right -272px no-repeat;}
+.icon-18{background:url(../../images/icons/icon1.png) right -289px no-repeat;}
+
+
+/*teams*/
+.team-box{width:362px; border:1px solid #ebebeb; border-top:none;height:790px;background:#fff; overflow:hidden;}
+
+
+.logo-style{ font-size:24px; height:85px; overflow:hidden; color:#7f7f7f;}
+.logo-style span{display:inline-block; vertical-align:-10px;}
+.logo-style img{ margin:8px 10px 0 15px;}
+
+.team-box .style-ul{border-top:1px solid #ebebeb;border-bottom:1px solid #ebebeb; height:65px; margin:0 0 15px 0; width:368px;}
+.team-box .style-ul li{ width:91px; height:65px;display:block; border-right:1px solid #ebebeb;text-align:center; float:left;overflow:hidden;}
+.team-box .style-ul li a{ display:block;width:91px; height:65px;  line-height:98px;}
+.team-box .style-ul li a:hover ,.focu-logo a:hover{ opacity:0.7; filter:alpha(opacity=70);} 
+
+.yellowtop{border-top:6px solid #f3b54c;}
+.yellowtop .style-ul a{ color:#f3b54c;}
+.yellowtop .style-ul .icon-1{ background:url(../../images/icons/icon2.png) 34px -49px no-repeat;}
+.yellowtop .style-ul .icon-2{ background:url(../../images/icons/icon2.png) -57px -47px no-repeat;}
+.yellowtop .style-ul .icon-3{ background:url(../../images/icons/icon2.png) -150px -47px no-repeat;}
+.yellowtop .style-ul .icon-4{ background:url(../../images/icons/icon2.png) -238px -49px no-repeat;}
+
+.purplytop{border-top:6px solid #643f8f;}
+.purplytop .style-ul a{ color:#643f8f}
+.purplytop .style-ul .icon-1{ background:url(../../images/icons/icon2.png) 34px -106px no-repeat;}
+.purplytop .style-ul .icon-2{ background:url(../../images/icons/icon2.png) -57px -104px no-repeat;}
+.purplytop .style-ul .icon-3{ background:url(../../images/icons/icon2.png) -150px -104px no-repeat;}
+.purplytop .style-ul .icon-4{ background:url(../../images/icons/icon2.png) -238px -106px no-repeat;}
+
+.bluetop{border-top:6px solid #2886cb;}
+.bluetop .style-ul a{ color:#2886cb;}
+.bluetop .style-ul .icon-1{ background:url(../../images/icons/icon2.png) 34px -166px no-repeat;}
+.bluetop .style-ul .icon-2{ background:url(../../images/icons/icon2.png) -57px -164px no-repeat;}
+.bluetop .style-ul .icon-3{ background:url(../../images/icons/icon2.png) -150px -164px no-repeat;}
+.bluetop .style-ul .icon-4{ background:url(../../images/icons/icon2.png) -238px -166px no-repeat;}
+
+.redtop{ border-top:6px solid #ca3236;}
+.redtop .style-ul a{ color:#ca3236;}
+.redtop .style-ul .icon-1{ background:url(../../images/icons/icon2.png) 34px 7px no-repeat;}
+.redtop .style-ul .icon-2{ background:url(../../images/icons/icon2.png) -57px 9px no-repeat;}
+.redtop .style-ul .icon-3{ background:url(../../images/icons/icon2.png) -150px 7px no-repeat;}
+.redtop .style-ul .icon-4{ background:url(../../images/icons/icon2.png) -238px 7px no-repeat;}
+.focu-info2{ margin:0px 0 0 15px;}
+
+/*活塞 掘金*/
+.mid-blue2top{border-top:6px solid #1b68b3;}
+.mid-blue2top a{ color:#1b68b3;}
+.mid-blue2top .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -624px no-repeat;}
+.mid-blue2top .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -622px no-repeat;}
+.mid-blue2top .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -622px no-repeat;}
+.mid-blue2top .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -624px no-repeat;}
+
+/*太阳队*/
+.deep-blue2top{border-top:6px solid #1f2160;}
+.deep-blue2top .style-ul a{ color:#1f2160;}
+.deep-blue2top .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -682px no-repeat;}
+.deep-blue2top .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -680px no-repeat;}
+.deep-blue2top .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -680px no-repeat;}
+.deep-blue2top .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -682px no-repeat;}
+
+/*老鹰队*/
+.light-red3top{border-top:6px solid #e23940;}
+.light-red3top .style-ul a{ color:#e23940;}
+.light-red3top .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -740px no-repeat;}
+.light-red3top .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -738px no-repeat;}
+.light-red3top .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -738px no-repeat;}
+.light-red3-style .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -740px no-repeat;}
+
+/*灰熊队*/
+.mid-bluetop{border-top:6px solid #628abb;}
+.mid-bluetop .style-ul a{ color:#628abb;}
+.mid-bluetop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px 7px no-repeat;}
+.mid-bluetop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px 9px no-repeat;}
+.mid-bluetop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px 7px no-repeat;}
+.mid-bluetop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px 7px no-repeat;}
+
+/*76人、尼克斯、魔术、马刺、雷霆、篮网*/
+.deep-bluetop{border-top:6px solid #2475b0;}
+.deep-bluetop .style-ul a{ color:#2475b0;}
+.deep-bluetop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -49px no-repeat;}
+.deep-bluetop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -47px no-repeat;}
+.deep-bluetop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -47px no-repeat;}
+.deep-bluetop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -49px no-repeat;}
+
+
+/*爵士 山猫 奇才 鹈鹕*/
+.black-bluetop{border-top:6px solid #042a5c;}
+.black-bluetop .style-ul a{ color:#042a5c;}
+.black-bluetop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -106px no-repeat;}
+.black-bluetop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -104px no-repeat;}
+.black-bluetop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -104px no-repeat;}
+.black-bluetop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -106px no-repeat;}
+
+/*步行者*/
+.blacktop{border-top:6px solid #071440;}
+.blacktop .style-ul a{ color:#071440;}
+.blacktop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -166px no-repeat;}
+.blacktop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -164px no-repeat;}
+.blacktop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -164px no-repeat;}
+.blacktop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -166px no-repeat;}
+
+/*快船*/
+.pinktop{border-top:6px solid #ee3f45;}
+.pinktop .style-ul a{ color:#ee3f45;}
+.pinktop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -222px no-repeat;}
+.pinktop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -220px no-repeat;}
+.pinktop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -220px no-repeat;}
+.pinktop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -222px no-repeat;}
+
+/*凯尔特人*/
+.greentop{border-top:6px solid #30834a;}
+.greentop .style-ul a{ color:#30834a;}
+.greentop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -279px no-repeat;}
+.greentop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -277px no-repeat;}
+.greentop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -277px no-repeat;}
+.greentop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -279px no-repeat;}
+
+/*森林狼*/
+.light-greentop{border-top:6px solid #3ca057;}
+.light-greentop .style-ul a{ color:#3ca057;}
+.light-greentop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -339px no-repeat;}
+.light-greentop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -337px no-repeat;}
+.light-greentop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -337px no-repeat;}
+.light-greentop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -339px no-repeat;}
+
+
+/*热火*/
+.hot-redtop{border-top:6px solid #98242f;}
+.hot-redtop  .style-ul a{ color:#98242f;}
+.hot-redtop  .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -396px no-repeat;}
+.hot-redtop  .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -394px no-repeat;}
+.hot-redtop  .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -394px no-repeat;}
+.hot-redtop  .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -396px no-repeat;}
+
+/*雄鹿*/
+.deep-greentop{border-top:6px solid #184b13;}
+.deep-greentop .style-ul a{ color:#184b13;}
+.deep-greentop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -453px no-repeat;}
+.deep-greentop .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -451px no-repeat;}
+.deep-greentop .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -451px no-repeat;}
+.deep-greentop .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -453px no-repeat;}
+
+/*雄鹿*/
+.deep-greentop{border-top:6px solid #184b13;}
+.deep-greentop .style-ul a{ color:#184b13;}
+.deep-greentop .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -453px no-repeat;}
+.deep-greentop .style-ul  .icon-2{ background:url(../../images/icons/icon-team.png) -57px -451px no-repeat;}
+.deep-greentop .style-ul  .icon-3{ background:url(../../images/icons/icon-team.png) -150px -451px no-repeat;}
+.deep-greentop .style-ul  .icon-4{ background:url(../../images/icons/icon-team.png) -238px -453px no-repeat;}
+
+/*骑士*/
+.deep-red2top{border-top:6px solid #882239;}
+.deep-red2top .style-ul a{ color:#882239;}
+.deep-red2top .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -509px no-repeat;}
+.deep-red2top .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -507px no-repeat;}
+.deep-red2top .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -507px no-repeat;}
+.deep-red2top .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -509px no-repeat;}
+
+/*猛龙*/
+.light-red2top{border-top:6px solid #ce3442;}
+.light-red2top .style-ul a{ color:#ce3442;}
+.light-red2top .style-ul .icon-1{ background:url(../../images/icons/icon-team.png) 34px -566px no-repeat;}
+.light-red2top .style-ul .icon-2{ background:url(../../images/icons/icon-team.png) -57px -564px no-repeat;}
+.light-red2top .style-ul .icon-3{ background:url(../../images/icons/icon-team.png) -150px -564px no-repeat;}
+.light-red2top .style-ul .icon-4{ background:url(../../images/icons/icon-team.png) -238px -566px no-repeat;}
+
+
+.focu-new{ margin:5px 15px;border-bottom:1px dotted #ebebeb;}
+.focu-new .part-ul{margin:0;border-bottom:none; padding-bottom:5px; list-style:none;}
+.focu-con{ width:334px;}
+.focu-new .part-ul li{ height:36px; line-height:36px;}
+.focu-new .part-ul .focu-li{ height:112px;  text-indent:0px;}
+.info-left img{height:107px;}
+.focu-new .focu-li .focu-info{ margin:0;}
+.focu-new .part-ul li a{ padding-right:5px; _padding-right:0px;}
+.focu-new .part-ul li a:hover{ text-decoration:underline;}
+.focu-new .small-icon{ top:10px;}
+/*.focu-con li a:hover{ text-decoration:underline;}
+.focu-new p .topic{ background:#52adbf;}
+.focu-new p .oil{ background:#7252a9;}*/
+
+/*运动装备*/
+.noborer{ border:none!important;}
+.sport{ width:708px; background:#fff; padding:15px 20px 20px 20px; height:349px;border-top:6px solid #2886cb;}
+.sport-market{ height:420px;}
+/*.mall span{ backgroun}*/
+.sport-eqit{ font-size:24px; color:#7f7f7f; margin-bottom:0px;}
+.sport-eqit span{ display:inline-block; vertical-align:middle;width:49px; height:49px; background:url(../../../../images/icons/icon2.png) 0 -232px no-repeat; margin-right:10px;}
+.sport .focu-info{_width:330px;}
+.sport .sport-right{ margin:10px 0 0 30px;_margin:10px 0 0 15px; _width:330px;}
+.sport .focu-new{ margin:0 0 0 0; border-bottom:1px dotted #ebebeb; border-top:none;}
+.sport .focu-con li{ height:35px; line-height:35px;}
+.sport .info-right p{ margin-top:5px;}
+.sport-card span{background:url(../../images/icons/icon2.png) -73px -231px no-repeat;}
+.sport-box .focu-new{ float:left;margin:0px 0 0 30px;_margin:0px 0 0 15px; _width:330px;}
+
+/*球队商城*/
+.sport-mall{ margin:20px 0 0 20px; padding-bottom:22px;}
+.sport-mall .goods{ width:204px; margin-right:25px;_margin-right:20px;}
+.goods{ position:relative; z-index:1;}
+.sport-mall .goodspic{ border:1px solid #e7e7e7; width:204px; height: auto;}
+.sport-mall .goodsname{ padding:15px 0 0px 0; display:inline-block; height:44px;}
+.tabChange{height:30px; width:100%;border-bottom:1px solid #c2c2c2;}
+.tabChange ul{  float:right; padding-right:10px; height:30px;}
+.tabChange li{ display:block; float:left; width:52px; height:30px; text-align:center;}
+.tabChange li a{ font-size:16px; color:#7f7f7f;height:29px; display:block; }
+.tabChange li a:hover ,.tabChange li.current a { border-bottom:3px solid #2576b1;}
+.chang-btn{ display:block; position:absolute; z-index:2; width:61px; height:20px; line-height:20px;text-align:center; color:#fff; background:url(../../images/icons/icon2.png) -147px -386px no-repeat; font-size:12px; top:171px; left:128px;}
+.chang-btn:hover{ background:url(../../images/icons/icon2.png) -147px -357px no-repeat;}
+
+
+/*右侧边栏*/
+/*直播*/
+.onlie-box{ width:232px; border:1px solid #ebebeb; background:#fff;}
+.tab-ul{ height:32px; width:235px;}
+.tab-ul li{ float:left;height:31px; width:78px; text-align:center; line-height:31px;border-bottom:1px solid #ebebeb;}
+.tab-ul li a{ display:block;border-right:1px solid #ebebeb; background:#f9f9f9; font-size:14px; color:#7f7f7f;}
+.tab-ul li a:hover ,.tab-ul li.current a{ border-top:2px solid #c73b50!important; background:#fff;}
+.tabBox{ padding-top:10px;}
+.tabBox ul{ padding:10px;}
+.tabBox li{ text-align:center; padding:10px 0;border-bottom:1px dotted #ebebeb; margin-bottom:10px;}
+.tab .right-now{ color:#cacaca;}
+.right-now a{ padding:0 10px; font-size:12px;}
+.right-now a:hover{ text-decoration:underline;}
+.tabBox .pk{ padding-bottom:5px; vertical-align:top; position:relative;}
+.tabBox .pk em{ padding:0 10px; font-size:14px; vertical-align:top; line-height:24px; color:#000;}
+.tabBox .pk .logoimg{ padding:0; display:inline-block; vertical-align:top;}
+.tabBox .pk .logoimg em{ display:inline-block; font-size:12px;}
+.tabBox .pk span img{ border:1px solid #ebebeb;}
+.tabBox .pk span{ line-height:24px;}
+.tabBox .pk span em{ padding-left:10px; color:#000;}
+.tabBox .pk a{ display:block; position:absolute; width:84px; height:22px; border:1px solid #e2e2e2; background:#efefef; font-size:12px; color:#000; line-height:22px; top:28px; left:63px;}
+.tabBox .pk-had em{ font-size:16px;}
+
+
+.sport-goods{ background:#fff; padding:16px 15px 16px 15px;padding:17px 15px 16px 15px\9;*padding:16px 15px 15px 15px;
+_padding:14px 15px 14px 15px; width:202px; border:1px solid #ebebeb;}
+.right-title{ text-align:center; font-size:18px; color:#7f7f7f;}
+.right-title span{ display:inline-block; width:37px; height:37px; margin:0 8px 20px 0; vertical-align:-31px; *vertical-align:-4px;}
+.right-title span.goods{ background:url(../../images/icons/icon2.png) -151px -238px no-repeat; }
+.right-title span.activty{background:url(../../images/icons/icon2.png) -254px -235px no-repeat;}
+.right-title span.hours{background:url(../../images/icons/icon2.png) -53px -299px no-repeat;}
+.right-title span.sport-things{background:url(../../images/icons/icon2.png) -227px -352px no-repeat;}
+.right-title span.super{background:url(../../images/icons/icon2.png) -108px -298px no-repeat;}
+.right-title span.points{background:url(../../images/icons/icon2.png) -166px -298px no-repeat;}
+.right-title span.joins{background:url(../../images/icons/icon2.png) -225px -297px no-repeat;}
+.right-title span.cloths{background:url(../../images/icons/icon2.png) 0 -300px no-repeat;}
+.sport-goods .barblock{ padding:0px;}
+.sport-goods .goodspic{ width:204px; height:auto;}
+.notive{ text-align:center; font-size:16px; color:#2576b1; margin:0px 0 15px;}
+.notive span{ font-size:32px; font-weight:bold;}
+.sport-goods .dareninfo{ width:110px; overflow:hidden;}
+/*积分榜*/
+.point-ul{ margin-left:15px;}
+.nums{ display:inline-block; width:17px; height:17px; font-size:12px; margin:2px 8px 0 0 ;text-align:center; line-height:17px; border-radius:3px; color:#fff; background:#2576b1;}
+.nums.grey{ background:#999;}
+.point-ul img{ margin-right:8px;}
+.point-ul li{ height:50px; margin-bottom:16px;}
+.point-ul div.info{ font-size:12px;}
+.point-ul div.info p{ color:#000;}
+.point-ul .info .name{ color:#2576b1; margin-bottom:8px;}
+
+/*最新加入*/
+.joins-ul{ width:250px;}
+.joins-ul li{ width:50px; overflow:hidden; margin:0 27px 15px 0; float:left;}
+.joins-ul li p{ font-size:12px;}
+.joins-ul li p.name{ padding-top:3px; height:19px; overflow:hidden;}
+.joins-ul li p.name a{ color:#2576b1}
+.joins-ul li p.name a:hover{ text-decoration:underline;}
+
+/*更衣室情况*/
+.cons .video{ width:204px; height:136px; position:relative;}
+.cons .video .icon-play{ top:53px; left:87px;display:inline-block; width:30px; height:30px; background:url(../../images/icons/icon_play.png) 0 0 no-repeat; position:absolute; z-index:2;}
+.cons .video  .icon-play:hover{background:url(../../images/icons/icon_play.png) right 0 no-repeat;}
+.video-deatil{ margin:8px 0 15px 0;  line-height:20px;}
+.video-deatil a{font-size:12px; color:#595959;}
+.video-deatil a:hover ,.other-new li a:hover ,.goods-deatil a:hover{ text-decoration:underline;}
+.other-new{ margin-top:-8px;}
+.other-new li{ height:30px; line-height:30px;}
+.other-new li a{ color:#2576b1; font-size:12px;}
+
+/*运动装备*/
+.goods-img{ width:204px; border:1px solid #e7e7e7;}
+.goods-deatil{margin:5px 0 15px 0;}
+.goods-deatil a{font-size:12px; color:#2576b1;}
+.goods-deatil p{font-size:12px; color:#595959; line-height:20px; margin-top:5px;}
+
+.sport-left ul{
+    list-style:none;
+}

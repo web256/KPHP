@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理中心{if $title}-{$title}{/if}</title>
+    <base href="{$smarty.const.SITE_URL}/"></base>
+        
+    {* 加载bootstrap css *}
+    <link href="{$smarty.const.SITE_URL}/js/bootstrap-2.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$smarty.const.SITE_URL}/js/bootstrap-2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$smarty.const.SITE_URL}/css/admin/bootstrap_fix.css" rel="stylesheet" type="text/css" />
+    
+    
+    <!--[if IE 8]>
+      <link href="{$smarty.const.SITE_URL}/js/bootstrap-2.3.1/css/bootstrap-ie8.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    
+    {* 加载项目自己css *}
+    <link href="{$smarty.const.SITE_URL}/css/admin/jquery.bigcolorpicker.css" rel="stylesheet" type="text/css" />
+    
+    {* 加载jquery *}
+    <script src="{$smarty.const.SITE_URL}/js/jquery-1.7.1.min.js"></script>
+    
+    <script>
+      var siteUrl = "{$smarty.const.SITE_URL}";
+      var uploadUrl = "{$smarty.const.UPLOAD_URL}";
+    </script>
+    
+    {* 加载bootstrapjs *}
+    <script src="{$smarty.const.SITE_URL}/js/bootstrap-2.3.1/js/bootstrap.min.js"></script>
+    
+    {* jquery ui 1.8.11 *}
+    <script src="{$smarty.const.SITE_URL}/js/jqueryui/1.8.11/jquery-ui.js"></script>
+    <link href="{$smarty.const.SITE_URL}/js/jqueryui/1.8.11/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
+    {* 插件区 *}
+    <script src="{$smarty.const.SITE_URL}/js/jquery.cookie.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/validate/jquery.validate.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/validate/messages_cn.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/validate/messages_cn.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/validate/additional-methods.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/jqueryui/1.8.11/i18n/jquery.ui.datepicker-zh-CN.js"></script>    
+    
+    {* 通用函数库 *}
+    <script src="{$smarty.const.SITE_URL}/js/common.js"></script>
+    <script src="{$smarty.const.SITE_URL}/js/admin.js?v={$smarty.const.JS_VERSION}"></script>
+    <script src="{$smarty.const.SITE_URL}/js/jquery.bigcolorpicker.js"></script>
+    
+    <script type="text/javascript">
+      $(function(){
+        var clickMenu = $.cookie('sMenu');
+        if (clickMenu == null) {
+          clickMenu = 1;
+        }
+        $('.main-menu .main-menu-tit').each(function(i) {
+          if (i != clickMenu) {
+            $(this).next().css('display', 'none');
+          }
+          $(this).click(function() {
+            if ($(this).next().css('display') == 'none') {
+              $('.main-menu .main-menu-tit').next().slideUp('fast');
+              $(this).next().slideDown('fast');
+              $.cookie('sMenu', i, { expires: 3600 * 24 * 30, path: '/' });
+            } else {
+              $(this).next().slideUp('fast');
+            }
+          });
+        });
+      });
+    </script>
+  </head> 
+ 
+  {*$admin_id = user_helper::is_admin()*}
+  <body>
+    <iframe id="iframeUpload" name="iframeUpload" style="display:none;"></iframe>
+    <!-- 头部 start -->
+    <div id="header" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div><a class="brand" href="javascript:void(0);">管理中心</a></div>
+          <div>
+            {* 顶部常用导航 *}
+            <ul class="nav">
+              <!-- <li class="active"><a>***</a></li> -->
+            </ul>
+            {* 用户信息 *}
+            <ul class="nav pull-right">
+              <li>
+                <a href="javascript:;" target="_self">欢迎回来，{user_helper::display_name(user_helper::get_user_id())}</a>
+              </li>
+              <li class="divider-vertical"></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="jav" class="dropdown-toggle" data-toggle="dropdown">操作 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{setUrl('user/logout?from=admin')}">退出</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 头部 end -->
+    
+    <!-- 主容器 start -->
+    <div id="container" class="container-fluid">
+      <div class="row-fluid">

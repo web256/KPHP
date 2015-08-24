@@ -31,7 +31,6 @@ echo '<pre>';
 // print_r($data);
 
 
-
 // 删除
 // $sql = 'where id = ?';
 // $params = array(5);

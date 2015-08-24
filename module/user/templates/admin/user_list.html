@@ -1,0 +1,79 @@
+{include_www file="admin/lib/header.html" title="用户信息管理"}
+{include_www file="admin/lib/sidebar.html"}
+
+<!-- 主内容 start -->
+<div id="content" class="span10">
+  <!-- 标题 start -->
+  <div class="pageTit page-header">
+    <h1>用户列表<small>{if $total}（{$total}）{/if}在这里你可以对用户进行管理</small></h1>
+    <div class="opt">
+      <a class="btn btn-info" href="{setUrl("user/admin")}">刷新{$key}</a>
+     <!-- <a class="btn btn-info" href="{setUrl("user/admin/add")}">添加</a> -->
+    </div>
+  </div>
+  <!-- 标题 end -->
+    <!-- 搜索区块 start -->
+  <div class="search">
+    <form class="well form-search" action="{setUrl('user/admin')}" method="get">
+      <input type="hidden" value="user/admin" name="anu" />
+      <span>&nbsp;&nbsp;&nbsp;用&nbsp;&nbsp;户&nbsp;&nbsp;名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" name="search_filter[user_name]" value="{if $search_filter['user_name']}{$search_filter['user_name']}{/if}" class="input-medium">
+      </span>
+
+      <br />
+      <span>&nbsp;&nbsp;&nbsp;手&nbsp;&nbsp;机&nbsp;&nbsp;号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" name="search_filter[phone_num]" value="{if $search_filter['phone_num']}{$search_filter['phone_num']}{/if}" class="input-medium">
+      </span>
+     <br />
+      <span>&nbsp;&nbsp;&nbsp;IP&nbsp;&nbsp;地&nbsp;&nbsp;址：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" name="search_filter[last_login_ip]" value="{if $search_filter['last_login_ip']}{$search_filter['last_login_ip']}{/if}" class="input-medium">
+      </span>
+
+      <br />
+      <span>&nbsp;&nbsp;&nbsp;添加时间：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" id="start_time" name="search_filter[start_add_time]" value="{if $search_filter['start_add_time']}{$search_filter['start_add_time']}{/if}" class="input-medium"> --
+        <input type="text" id="end_time" name="search_filter[end_add_time]" value="{if $search_filter['end_add_time']}{$search_filter['end_add_time']}{/if}" class="input-medium">
+      </span>
+      <br />
+      <button type="submit" class="btn">搜索</button>
+      <input type="reset" class="btn" value="重置" />
+      {*<input type="submit" class="btn" value="导出" name="is_excel" />*}
+    </form>
+  </div>
+
+  <!-- 内容区块 start -->
+  <div class="dataBox">
+    <table class="table table-bordered table-striped center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>账号</th>
+          <th>账号类型</th>
+          <th>最后一次登陆时间</th>
+          <th>最后一次登录IP</th>
+          <th>添加时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        {foreach $user_list as $k=>$v}
+          <tr id="dataList{$v.id}">
+            <td>{$v.id}</td>
+            <td>{user_helper::display_name($v.id)}</td>
+            <td>{$v.is_type}</td>
+            <td>{$v.update_time}</td>
+            <td>{$v.last_login_ip}</td>
+            <td>{$v.add_time}</td>
+          </tr>
+        {foreachelse}
+          <tr><td colspan="8">暂无相关信息</td></tr>
+        {/foreach}
+      </tbody>
+    </table>
+  </div>
+  <!-- 内容区块 end -->
+  <!-- 分页 start -->
+  {include_www file="admin/lib/pager.html"}
+  <!-- 分页 end -->
+</div>
+<!-- 主内容 end -->
+{include_www file="admin/lib/footer.html"}
