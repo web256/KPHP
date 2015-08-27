@@ -15,17 +15,6 @@ class Action
     public function __call($action = '', $params = array())
     {
 
-        var_dump(Request::getClientIP());
-        echo '<br>';
-        var_dump(Request::getServerIP());
-        echo '<br>';
-        var_dump(Request::getRequestURI());
-        echo '<br>';
-        var_dump(Request::getRequestTime());
-        echo '<br>';
-        var_dump(Request::getRequestHost());
-
-
         $page_no = Request::get('page_no', 0);
 
         $where = 'where 1 = ? ';
@@ -45,6 +34,32 @@ class Action
         }
 
         Response::display('admin/user_list.html');
+    }
+
+    public function add()
+    {
+        Response::display('admin/user_add.html');
+    }
+
+    public function save()
+    {
+        $data = array();
+
+        $upload = new Upload();
+        $file_info = $upload->uploadFile($_FILES['file']);
+
+        if (isset($file_info['errorCode'])) {
+            exit('上传文件失败!');
+        }
+
+        $data['avatar'] = $file_info['file'];
+        $data['user_name'] = Request::post('user_name', '');
+
+        if (_model('user')->create($data)) {
+           return '保存成功!';
+        }
+
+        return array('url'=>'user/admin', 'msg'=>'添加失败', 'type'=>'error');
     }
 }
 ?>

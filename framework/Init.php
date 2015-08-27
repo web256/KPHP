@@ -25,6 +25,7 @@ require FRAMEWORK_PATH.'/ModelRes.php';
 require FRAMEWORK_PATH.'/Response.php';
 require FRAMEWORK_PATH.'/Request.php';
 require FRAMEWORK_PATH.'/Pager.php';
+require FRAMEWORK_PATH.'/Upload.php';
 /**
  * model 数据库操作
  * @param unknown_type $table

@@ -1,0 +1,39 @@
+{include_www file="admin/lib/header.html" title="添加京东商品"}
+{include_www file="admin/lib/sidebar.html"}  
+<!-- 主内容 start -->
+<div id="content" class="span10">
+  <!-- 标题 start -->
+  <div class="pageTit page-header">
+    <h1>{if $goods_info}编辑{else}添加{/if}视频 <small>在这里{if $goods_info}编辑{else}添加新{/if}的视频信息</small></h1>
+    <div class="opt">
+      <a class="btn btn-info" href="{setUrl('user/admin')}">返回交互屏视频列表</a>
+    </div>
+  </div>
+  <!-- 标题 end -->
+  <!-- 内容区块 start -->
+  <div class="formBox">
+   <div class="formBox">
+    <form action="{setUrl('user/admin/save')}" method="post" enctype="multipart/form-data">
+      <fieldset>
+        <div class="control-group">
+          <label>会员名称：<em>(必填)</em></label>
+          <input type="text" name="user_name" value="{$info['user_name']}" validate="required">
+        </div>
+
+        <!-- 图片 -->
+        <div class="control-group">
+          <label>缩略图：<em>(必填 200*112)</em></label>
+          <input type="file" name="file" />
+        </div>
+        <div class="control-group">
+          <input type="submit" class="btn btn-primary Sub" value="保存"/>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <!-- 内容区块 end -->
+  </div>
+  <!-- 内容区块 end -->
+</div>
+<!-- 主内容 end -->
+{include_www file="admin/lib/footer.html"}

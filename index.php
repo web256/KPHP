@@ -36,6 +36,11 @@ define('ROOT_PATH', dirname(__FILE__));
 */
 define('STATIC_URL', SITE_URL);
 
+/**
+ * 文件上传目录
+ */
+define('UPLOAD_PATH', ROOT_PATH.'/static/upload');
+
 
 /**
  * 模块根目录

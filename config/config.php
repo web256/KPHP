@@ -24,6 +24,21 @@ KConfig::set('db', array(
 ));
 
 
+// 文件上传配置
+KConfig::set('upload_file', array(
+    'allow_type' => array('jpg', 'png', 'gif', 'jpeg'), // 允许 mime类型
+    'max_size'  => 2 * 1024 * 1024 // 2M
+));
+
+
+
+// 缩略图配置 cut 裁剪, max 最大, mix 融图
+KConfig::set('image_thumb', array(
+    'type'  => 'max',
+    'small' => array('gif', 'jpeg'), // 允许 mime类型
+    'big'   => array(100, 200),
+    'large' => array(200, 200)
+));
 
 // 项目命名空间
 KConfig::set('project_name', 'dev_test1');

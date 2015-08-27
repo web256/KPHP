@@ -16,7 +16,7 @@
 function setUrl($url, $flag = '')
 {
    if ($flag) $url = $url.$flag;
-   return SITE_URL.'?anu='.$url;
+   return SITE_URL.'/?anu='.$url;
 }
 
 /**

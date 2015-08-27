@@ -5,7 +5,7 @@
  * ============================================================================
  * $Author: 王德康 (wangdk369@gmail.com) $
  * $Date: 2015-8-18 下午4:05:59 $
- * $Id: Controller.php 1718 2015-08-21 07:48:38Z wangdk $
+ * $Id: Controller.php 1970 2015-08-26 08:47:16Z wangdk $
  */
 
 class Controller
@@ -35,8 +35,6 @@ class Controller
 
         // 默认控制器
         self::$rules['defaultModule'] = 'home';
-
-
         $urls = self::parse_url();
 
         // 当前登录用户
@@ -44,15 +42,9 @@ class Controller
 
         // 管理员列表
         $admin_users = KConfig::get('admin_users');
-
-        foreach ($urls as $k => $v) {
-            $arr = explode('/', $v);
-
-            // 当前路径有访问到后台
-            if (in_array('admin', $arr)) {
-                if (!in_array($user_id, $admin_users)) {
-                    exit('Not Found~');
-                }
+        if (isset($urls['site']) && $urls['site'] == 'admin') {
+            if (!in_array($user_id, $admin_users)) {
+                exit('Not Found~');
             }
         }
 
@@ -94,16 +86,65 @@ class Controller
         if (isset($urls['action']) && $urls['action']) {
 
             if (method_exists($action, $urls['action'])) {
-                call_user_func_array(array($action, $urls['action']), array());
+                $message = call_user_func_array(array($action, $urls['action']), array());
+                if ($message) self::displayMessage($message);
 
             } else {
-                self::setDefaultController($action);
+                $message  = self::setDefaultController($action);
+                if ($message) self::displayMessage($message);
             }
-
         } else {
-            self::setDefaultController($action);
+            $message = self::setDefaultController($action);
+            if ($message) self::displayMessage($message);
+        }
+    }
+
+    /**
+     * 判断是否后台
+     * @return boolean
+     */
+    private static function isAdmin($urls)
+    {
+        return isset($urls['site']) && $urls['site'] == 'admin';
+    }
+
+    /**
+     * 处理控制器的返回值
+     * @param unknown_type $message
+     */
+    private static function displayMessage($message)
+    {
+        $type = "success";
+        $url  = '';
+        $info = '';
+
+        if (is_string($message)) {
+            $msg = $message;
+
+        } else if (is_array($message)) {
+            if (isset($message['type']) && $message['type']) $type = $message['type'];
+            if (isset($message['url'])  && $message['url'])  $url  = $message['url'];
+            if (isset($message['msg']) && $message['msg'])   $msg = $message['msg'];
         }
 
+        if (Request::isAjax()) {
+            header('Content-type: application/json');
+            echo json_decode($message);
+            exit;
+        }
+
+        Response::assign('type', $type);
+        Response::assign('redirect_url', $url);
+        Response::assign('msg', $msg);
+
+        Response::setTemplateDir(ROOT_PATH.'/templates');
+
+        $urls = self::parse_url();
+        if (self::isAdmin($urls)) {
+            Response::display('message/admin/msg.html');
+        } else {
+            Response::display('message/msg.html');
+        }
     }
 
     /**
@@ -227,21 +268,19 @@ class Controller
      */
     public static function setDefaultController($action)
     {
-
         // 方法不存在，寻找默认__call
         if (method_exists($action, '__call')) {
-            call_user_func_array(array($action, '__call'), array());
+            return call_user_func_array(array($action, '__call'), array());
         } else {
 
             // 方法不存在，寻找默认index
             if (method_exists($action, 'index')) {
-                call_user_func_array(array($action, 'index'), array());
+                return call_user_func_array(array($action, 'index'), array());
             } else {
                 throw new KException('Not Found Action');
             }
         }
     }
-
 
     /**
      * 解析URL路径
@@ -260,9 +299,7 @@ class Controller
 
         if ($count == 2) {
             $urls['module']     = array_shift($urls_arr);
-            // $urls['controller'] = array_shift($urls_arr);
-
-            $urls['action'] = array_shift($urls_arr);
+            $urls['action']     = array_shift($urls_arr);
 
         } else if ($count > 2) {
             $urls['module']     = array_shift($urls_arr);
@@ -273,6 +310,7 @@ class Controller
             $urls['module']     = $anu;
         }
 
+        if ($urls['controller'] == 'admin') $urls['site'] = $urls['controller'];
         return $urls;
     }
 

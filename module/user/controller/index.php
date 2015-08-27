@@ -12,15 +12,7 @@ class Action
 {
     public function __call($action = '', $params = array())
     {
-        echo '<br>';
-        echo __FILE__. __FUNCTION__;
-        echo 'test';
+        return '您找的帖子不存在!';
     }
-
-    public function test1()
-    {
-        var_dump('test1');
-    }
-
 }
 ?>

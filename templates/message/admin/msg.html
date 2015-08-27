@@ -1,0 +1,45 @@
+{* $Id: msg.html 53047M 2013-08-14 01:39:08Z (local) $ *}
+{include_www file="admin/lib/header.html" title="提示信息"}
+{include_www file="admin/lib/sidebar.html"}
+<div id="content" class="span10">
+  <div class="pageTit page-header">
+    <h1>提示消息</h1>
+  </div>
+  <div class="msgBox">
+    <div class="message alert alert-{$type}">
+      <div class="span1">
+         <img alt="{$type}" src="{$smarty.const.STATIC_URL}/images/admin/{$type}.png">
+      </div>
+      <div class="span8">
+        <div style="margin-left:10px;">
+          <h1>
+            {$msg}
+          </h1>
+          
+          <span>
+          {if $redirect_url}
+            <a href="{$redirect_url}">点击此处跳转</a>（<em id="jumpTime">5</em>秒后自动跳转）
+          {else}
+            <a href="javascript:history.back();">返回上一页</a>
+          {/if}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /content -->
+{if $redirect_url}
+  <script type="text/javascript">
+    var time = 5;
+    var jumpInterval = setInterval(function(){
+      time--;
+      if (time < 0) time = 0;
+      $("#jumpTime").text(time);
+      if (time == 0) {
+          //location.href='{$redirect_url}';
+          clearInterval(jumpInterval);
+      }
+    }, 1000);
+  </script>
+{/if}
+{include_www file="admin/lib/footer.html"}
